@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Censeo\n"
-"POT-Creation-Date: 2013-04-20 22:27+0200\n"
-"PO-Revision-Date: 2013-04-20 22:27+0200\n"
+"POT-Creation-Date: 2013-04-20 23:11+0200\n"
+"PO-Revision-Date: 2013-04-20 23:11+0200\n"
 "Last-Translator: Georgi Popov <magadanski_uchen@yahoo.com>\n"
 "Language-Team: \n"
 "Language: English\n"
@@ -17,7 +17,19 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../functions.php:33
+#: ../functions.php:40
 #, php-format
 msgid "Page %s"
+msgstr ""
+
+#: ../functions.php:47
+msgid "Default Sidebar"
+msgstr ""
+
+#: ../lib/default-widgets.php:12
+msgid "Search"
+msgstr ""
+
+#: ../lib/default-widgets.php:21
+msgid "Latest Posts"
 msgstr ""
