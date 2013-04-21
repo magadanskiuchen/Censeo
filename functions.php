@@ -1,8 +1,12 @@
 <?php
+define('CENSEO_LIB', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR);
+define('CENSEO_CONFIG', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR);
+
 add_action('after_setup_theme', 'censeo_after_setup_theme');
 
 function censeo_after_setup_theme() {
-	require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'default-widgets.php');
+	require_once(CENSEO_LIB . 'default-widgets.php');
+	require_once(CENSEO_LIB . 'options' . DIRECTORY_SEPARATOR . 'Censeo_Options.php');
 	
 	# i18n
 	load_theme_textdomain('censeo', 'lang');
@@ -25,6 +29,7 @@ function censeo_after_setup_theme() {
 	
 	# Add actions
 	add_action('widgets_init', 'censeo_widgets_init');
+	add_action('wp_loaded', 'censeo_wp_loaded');
 }
 
 function censeo_wp_title($title, $sep) {
@@ -52,4 +57,9 @@ function censeo_widgets_init() {
 		'after_title' => '</h3>',
 	));
 }
+
+function censeo_wp_loaded() {
+	require_once(CENSEO_CONFIG . 'options.php');
+}
+
 ?>
