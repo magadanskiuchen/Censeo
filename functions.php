@@ -6,7 +6,7 @@ add_action('after_setup_theme', 'censeo_after_setup_theme');
 
 function censeo_after_setup_theme() {
 	require_once(CENSEO_LIB . 'default-widgets.php');
-	require_once(CENSEO_LIB . 'options' . DIRECTORY_SEPARATOR . 'Censeo_Options.php');
+	require_once(CENSEO_LIB . 'Censeo_Options.php');
 	
 	# i18n
 	load_theme_textdomain('censeo', 'lang');
@@ -15,21 +15,22 @@ function censeo_after_setup_theme() {
 	add_theme_support('menus');
 	add_theme_support('post-thumbnails');
 	
-	# Enqueue styles
-	if (!is_admin()) {
-		wp_enqueue_style('censeo', get_bloginfo('template_directory') . '/style.css', array(), '0.1', 'all');
-	}
-	
-	# Enqueue scripts
-	wp_enqueue_script('jquery');
-	wp_enqueue_script('censeo-functions', get_bloginfo('template_directory') . '/js/func.js', array('jquery'), '0.1');
-	
 	# Add filters
 	add_filter('wp_title', 'censeo_wp_title', 10, 2);
 	
 	# Add actions
+	add_action('wp_enqueue_scripts', 'censeo_wp_enqueue_scripts');
 	add_action('widgets_init', 'censeo_widgets_init');
 	add_action('wp_loaded', 'censeo_wp_loaded');
+}
+
+function censeo_wp_enqueue_scripts() {
+	# Enqueue styles
+	wp_enqueue_style('censeo', get_bloginfo('template_directory') . '/style.css', array(), '0.1', 'all');
+	
+	# Enqueue scripts
+	wp_enqueue_script('jquery');
+	wp_enqueue_script('censeo-functions', get_bloginfo('template_directory') . '/js/func.js', array('jquery'), '0.1');
 }
 
 function censeo_wp_title($title, $sep) {

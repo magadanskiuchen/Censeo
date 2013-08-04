@@ -1,5 +1,5 @@
 <?php
-class Censeo_Options {
+class Censeo_Page {
 	protected $id;
 	protected $parent = false;
 	
@@ -26,6 +26,8 @@ class Censeo_Options {
 	}
 	
 	public function init() {
+		do_action('censeo_page_' . $this->get_id() . '_before_init');
+		
 		$page_title = $this->title;
 		$menu_title = $this->title;
 		$capability = $this->capability;
@@ -39,10 +41,12 @@ class Censeo_Options {
 		} else {
 			add_menu_page($page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position);
 		}
+		
+		do_action('censeo_page_' . $this->get_id() . '_after_init');
 	}
 	
 	public function render() {
-		
+		do_action('censeo_page_' . $this->get_id() . '_render');
 	}
 }
 ?>
