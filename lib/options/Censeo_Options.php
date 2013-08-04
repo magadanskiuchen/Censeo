@@ -1,7 +1,7 @@
 <?php
 class Censeo_Options {
-	private $id;
-	private $parent = false;
+	protected $id;
+	protected $parent = false;
 	
 	public $title;
 	public $capability;
