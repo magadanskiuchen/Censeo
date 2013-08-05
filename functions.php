@@ -1,9 +1,20 @@
 <?php
+/**
+ * Default Censeo Functions
+ * 
+ * @package Censeo
+ */
+
 define('CENSEO_LIB', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR);
 define('CENSEO_CONFIG', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR);
 
 add_action('after_setup_theme', 'censeo_after_setup_theme');
 
+/**
+ * Setups core theme functionality
+ * 
+ * @since 0.1
+ */
 function censeo_after_setup_theme() {
 	require_once(CENSEO_LIB . 'default-widgets.php');
 	require_once(CENSEO_LIB . 'Censeo_Options.php');
@@ -24,6 +35,11 @@ function censeo_after_setup_theme() {
 	add_action('wp_loaded', 'censeo_wp_loaded');
 }
 
+/**
+ * Setup theme front-end JS and CSS
+ * 
+ * @since 0.1
+ */
 function censeo_wp_enqueue_scripts() {
 	# Enqueue styles
 	wp_enqueue_style('censeo', get_bloginfo('template_directory') . '/style.css', array(), '0.1', 'all');
@@ -33,6 +49,11 @@ function censeo_wp_enqueue_scripts() {
 	wp_enqueue_script('censeo-functions', get_bloginfo('template_directory') . '/js/func.js', array('jquery'), '0.1');
 }
 
+/**
+ * Set custom format of wp_title
+ * 
+ * @since 0.1
+ */
 function censeo_wp_title($title, $sep) {
 	global $paged, $page;
 	
@@ -48,6 +69,11 @@ function censeo_wp_title($title, $sep) {
 	return $title;
 }
 
+/**
+ * Register theme sidebars
+ * 
+ * @since 0.1
+ */
 function censeo_widgets_init() {
 	register_sidebar(array(
 		'name' => __('Default Sidebar', 'censeo'),
@@ -59,6 +85,11 @@ function censeo_widgets_init() {
 	));
 }
 
+/**
+ * Load theme deep functionality that requires full setup
+ * 
+ * @since 0.1
+ */
 function censeo_wp_loaded() {
 	require_once(CENSEO_CONFIG . 'options.php');
 }

@@ -1,11 +1,74 @@
 <?php
+/**
+ * Censeo admin panel pages
+ * 
+ * @package Censeo
+ * @subpackage Pages
+ */
+
+/**
+ * Base class for adding admin panel pages
+ * 
+ * Calls a <code>'censeo_page_' . $this->get_id() . '_render'</code> action as render function
+ * @since 0.1
+ */
 class Censeo_Page {
+	/**
+	 * Page ID
+	 * 
+	 * @since 0.1
+	 * @access protected
+	 * @var string
+	 */
 	protected $id;
+	
+	/**
+	 * Page parent
+	 * 
+	 * @since 0.1
+	 * @access protected
+	 * @var string Censeo_Page::$id
+	 */
 	protected $parent = false;
 	
+	/**
+	 * Page title
+	 * 
+	 * The label in the admin panel
+	 * @since 0.1
+	 * @access public
+	 * @var string
+	 */
 	public $title;
+	
+	/**
+	 * Page review capability
+	 * 
+	 * The capability that is required in order to see the page
+	 * @since 0.1
+	 * @access public
+	 * @var string WordPress capability type
+	 */
 	public $capability;
+	
+	/**
+	 * Page icon
+	 * 
+	 * The icon will be rendered in the WordPress admin menu
+	 * @since 0.1
+	 * @access public
+	 * @var string URL
+	 */
 	public $icon = '';
+	
+	/**
+	 * Position
+	 * 
+	 * Relative order position in WordPress admin menu
+	 * @since 0.1
+	 * @access public
+	 * @var int
+	 */
 	public $position = 90;
 	
 	public function __construct($id, $title, $capability='administrator', $parent=false) {
