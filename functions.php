@@ -18,6 +18,8 @@ add_action('after_setup_theme', 'censeo_after_setup_theme');
  */
 function censeo_after_setup_theme() {
 	require_once(CENSEO_LIB . 'default-widgets.php');
+	
+	require_once(CENSEO_LIB . 'Censeo_Page.php');
 	require_once(CENSEO_LIB . 'Censeo_Options.php');
 	
 	# i18n
