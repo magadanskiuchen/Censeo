@@ -14,6 +14,7 @@ add_action('after_setup_theme', 'censeo_after_setup_theme');
  * Setups core theme functionality
  * 
  * @since 0.1
+ * @return void
  */
 function censeo_after_setup_theme() {
 	require_once(CENSEO_LIB . 'default-widgets.php');
@@ -39,6 +40,7 @@ function censeo_after_setup_theme() {
  * Setup theme front-end JS and CSS
  * 
  * @since 0.1
+ * @return void
  */
 function censeo_wp_enqueue_scripts() {
 	# Enqueue styles
@@ -53,6 +55,9 @@ function censeo_wp_enqueue_scripts() {
  * Set custom format of wp_title
  * 
  * @since 0.1
+ * @param string $title
+ * @param string $sep
+ * @return string The formatted title
  */
 function censeo_wp_title($title, $sep) {
 	global $paged, $page;
@@ -73,6 +78,7 @@ function censeo_wp_title($title, $sep) {
  * Register theme sidebars
  * 
  * @since 0.1
+ * @return void
  */
 function censeo_widgets_init() {
 	register_sidebar(array(
@@ -86,9 +92,11 @@ function censeo_widgets_init() {
 }
 
 /**
- * Load theme deep functionality that requires full setup
+ * Callback function for the <code>wp_loaded</code> action.
  * 
+ * Load theme deep functionality that requires full setup
  * @since 0.1
+ * @return void
  */
 function censeo_wp_loaded() {
 	require_once(CENSEO_CONFIG . 'options.php');

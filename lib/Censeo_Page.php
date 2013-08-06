@@ -71,6 +71,17 @@ class Censeo_Page {
 	 */
 	public $position = 90;
 	
+	/**
+	 * Constructor for Censeo_Page
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @param string $id An ID for the page
+	 * @param string $title The title that will be shown in the menu and at the top of the page
+	 * @param string $capability Optional. Default value "administrator". A WordPress user capability
+	 * @param bool|string $parent Optional. Default value <code>false</code>. The ID of the parent page or false to make this a top-level page.
+	 * @return Censeo_Page
+	 */
 	public function __construct($id, $title, $capability='administrator', $parent=false) {
 		$this->id = sanitize_title_with_dashes($id);
 		$this->title = $title;
@@ -80,14 +91,33 @@ class Censeo_Page {
 		add_action('admin_menu', array(&$this, 'init'));
 	}
 	
+	/**
+	 * Returns the page ID
+	 * 
+	 * @since 0.1
+	 * @return string The page ID
+	 */
 	public function get_id() {
 		return $this->id;
 	}
 	
+	/**
+	 * Returns the page title
+	 * 
+	 * @since 0.1
+	 * @return string The page title
+	 */
 	public function get_parent() {
 		return $this->parent;
 	}
 	
+	/**
+	 * Callback function for the <code>admin_menu</code> action
+	 * 
+	 * Calls action <code>'censeo_page_' . $this->get_id() . '_after_init'</code>
+	 * @since 0.1
+	 * @return void
+	 */
 	public function init() {
 		do_action('censeo_page_' . $this->get_id() . '_before_init');
 		
@@ -108,6 +138,14 @@ class Censeo_Page {
 		do_action('censeo_page_' . $this->get_id() . '_after_init');
 	}
 	
+	/**
+	 * Page rendering function
+	 * 
+	 * Calls <code>'censeo_page_' . $this->get_id() . '_render'</code> action.
+	 * Add callbacks to the action to add content to the page rendering.
+	 * @since 0.1
+	 * @return void
+	 */
 	public function render() {
 		do_action('censeo_page_' . $this->get_id() . '_render');
 	}
