@@ -14,13 +14,14 @@
 class Censeo_Field {
 	protected $name;
 	protected $value = '';
-	protected $classes = array('censeo-field');
+	protected $classes = array('regular-text', 'censeo-field');
 	protected $label;
 	
-	public function __construct($name, $value, $label) {
+	public function __construct($name, $label) {
 		$this->name = $name;
-		$this->set_value($value);
 		$this->set_label($label);
+		
+		add_filter('censeo_validate_value', array(&$this, 'validate'));
 	}
 	
 	public function get_name() {
@@ -32,10 +33,10 @@ class Censeo_Field {
 	}
 	
 	public function set_value($value) {
-		$this->value = apply_filters('censeo_validate_value', array($this, 'validate'), $value);
+		$this->value = apply_filters('censeo_validate_value', $value);
 	}
 	
-	public function load_value($value) {
+	public function load_value() {
 		if (isset($_POST[$this->name])) {
 			$this->set_value($_POST[$this->name]);
 		}
@@ -72,11 +73,11 @@ class Censeo_Field {
 	}
 	
 	protected function render_field() {
-		return '<input id="' . esc_attr($this->get_name()) . '" name="' . esc_attr($this->get_name()) . '" class="' . esc_attr(implode(' ', $this->get_classes())) . '" value="' . esc_attr($this->get_value()) . '" />';
+		return '<input type="text" id="' . esc_attr($this->get_name()) . '" name="' . esc_attr($this->get_name()) . '" class="' . esc_attr(implode(' ', $this->get_classes())) . '" value="' . esc_attr($this->get_value()) . '" />';
 	}
 	
 	public function render() {
-		return '<div class="censeo-field"><label for="' . esc_attr($this->get_name()) . '">' . esc_html($this->label) . '</label>' . $this->render_field() . '</div>';
+		return '<div class="censeo-field-row"><label for="' . esc_attr($this->get_name()) . '">' . esc_html($this->label) . ':</label>' . $this->render_field() . '</div>';
 	}
 }
 ?>
