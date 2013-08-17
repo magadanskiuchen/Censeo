@@ -46,6 +46,7 @@ class Censeo_Options extends Censeo_Page {
 	public function __construct($id, $title, $capability='administrator', $parent=false) {
 		parent::__construct($id, $title, $capability, $parent);
 		
+		add_action('censeo_page_' . $this->get_id() . '_render', array(&$this, 'render_options'));
 		add_action('censeo_options_' . $this->get_id() . '_before_render', array(&$this, 'load_field_values'));
 		
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -143,13 +144,10 @@ class Censeo_Options extends Censeo_Page {
 	 * @see Censeo_Page::render()
 	 * @return void
 	 */
-	public function render() {
-		parent::render();
+	public function render_options() {
 		do_action('censeo_options_' . $this->get_id() . '_before_render');
 		
 		?>
-		<h2><?php echo $this->title; ?></h2>
-		
 		<form action="" method="post">
 			<?php
 			foreach ($this->fields as $field) {
