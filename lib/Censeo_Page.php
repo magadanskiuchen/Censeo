@@ -95,6 +95,8 @@ class Censeo_Page {
 	 * Returns the page ID
 	 * 
 	 * @since 0.1
+	 * @access public
+	 * @see Censeo_Page::$id
 	 * @return string The page ID
 	 */
 	public function get_id() {
@@ -105,6 +107,8 @@ class Censeo_Page {
 	 * Returns the page title
 	 * 
 	 * @since 0.1
+	 * @access public
+	 * @see Censeo_Page::$parent
 	 * @return string The page title
 	 */
 	public function get_parent() {
@@ -116,6 +120,7 @@ class Censeo_Page {
 	 * 
 	 * Calls action <code>'censeo_page_' . $this->get_id() . '_after_init'</code>
 	 * @since 0.1
+	 * @access public
 	 * @return void
 	 */
 	public function init() {
@@ -144,6 +149,7 @@ class Censeo_Page {
 	 * Calls <code>'censeo_page_' . $this->get_id() . '_render'</code> action.
 	 * Add callbacks to the action to add content to the page rendering.
 	 * @since 0.1
+	 * @access public
 	 * @return void
 	 */
 	public function render() {

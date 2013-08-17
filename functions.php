@@ -55,6 +55,12 @@ function censeo_wp_enqueue_scripts() {
 	wp_enqueue_script('censeo-functions', get_bloginfo('template_directory') . '/js/func.js', array('jquery'), '0.1');
 }
 
+/**
+ * Setup theme admin panel JS and CSS
+ * 
+ * @since 0.1
+ * @return void
+ */
 function censeo_admin_enqueue_scripts() {
 	# Enqueue styles
 	wp_enqueue_style('censeo-fields', get_bloginfo('template_directory') . '/lib/styles/fields.css');
