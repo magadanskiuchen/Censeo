@@ -153,7 +153,13 @@ class Censeo_Page {
 	 * @return void
 	 */
 	public function render() {
-		do_action('censeo_page_' . $this->get_id() . '_render');
+		?>
+		<div class="wrap">
+			<h2><?php echo $this->title; ?></h2>
+			
+			<?php do_action('censeo_page_' . $this->get_id() . '_render'); ?>
+		</div>
+		<?php
 	}
 }
 ?>
