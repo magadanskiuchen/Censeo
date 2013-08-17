@@ -34,6 +34,8 @@ function censeo_after_setup_theme() {
 	
 	# Add actions
 	add_action('wp_enqueue_scripts', 'censeo_wp_enqueue_scripts');
+	add_action('admin_enqueue_scripts', 'censeo_admin_enqueue_scripts');
+	
 	add_action('widgets_init', 'censeo_widgets_init');
 	add_action('wp_loaded', 'censeo_wp_loaded');
 }
@@ -51,6 +53,13 @@ function censeo_wp_enqueue_scripts() {
 	# Enqueue scripts
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('censeo-functions', get_bloginfo('template_directory') . '/js/func.js', array('jquery'), '0.1');
+}
+
+function censeo_admin_enqueue_scripts() {
+	# Enqueue styles
+	wp_enqueue_style('censeo-fields', get_bloginfo('template_directory') . '/lib/styles/fields.css');
+	
+	# Enqueue scripts
 }
 
 /**
