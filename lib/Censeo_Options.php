@@ -44,13 +44,19 @@ class Censeo_Options extends Censeo_Page {
 	 * @return Censeo_Options
 	 */
 	public function __construct($id, $title, $capability='administrator', $parent=false) {
-		parent::__construct($id, $title, $capability, $parent);
-		
-		add_action('censeo_page_' . $this->get_id() . '_render', array(&$this, 'render_options'));
-		add_action('censeo_options_' . $this->get_id() . '_before_render', array(&$this, 'load_field_values'));
-		
-		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			add_action('wp_loaded', array(&$this, 'save_field_values'), 999);
+		if (current_user_can($capability)) {
+			parent::__construct($id, $title, $capability, $parent);
+			
+			add_action('censeo_page_' . $this->get_id() . '_render', array(&$this, 'render_options'));
+			add_action('censeo_options_' . $this->get_id() . '_before_render', array(&$this, 'load_field_values'));
+			
+			// If the action is removed then custom implementation of a nonce field should be added
+			// in order to avoid errors from the check_admin_referer() call
+			add_action('censeo_options_' . $this->get_id() . '_hidden_fields', array(&$this, 'nonce'));
+			
+			if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST[$this->get_id()])) {
+				add_action('wp_loaded', array(&$this, 'save_field_values'), 999);
+			}
 		}
 	}
 	
@@ -127,24 +133,38 @@ class Censeo_Options extends Censeo_Page {
 	 * @return void
 	 */
 	public function save_field_values() {
-		foreach ($this->fields as &$field) {
-			$field->load_value();
-			update_option($field->get_name(), $field->get_value());
+		if (check_admin_referer($this->get_nonce_action(), $this->get_nonce_name())) {
+			foreach ($this->fields as &$field) {
+				$field->load_value();
+				update_option($field->get_name(), $field->get_value());
+			}
+			
+			wp_redirect(add_query_arg('censeo-updated', 1));
+			exit;
 		}
-		
-		wp_redirect(add_query_arg('censeo-updated', 1));
-		exit;
 	}
 	
 	/**
 	 * Options page rendering function
 	 * 
+	 * The following actions are available:
+	 * <code>'censeo_options_before_render'</code>
+	 * <code>'censeo_options_' . $this->get_id() . '_before_render'</code>
+	 * <code>'censeo_options_hidden_fields'</code>
+	 * <code>'censeo_options_' . $this->get_id() . '_hidden_fields'</code>
+	 * <code>'censeo_options_after_render'</code>
+	 * <code>'censeo_options_' . $this->get_id() . '_after_render'</code>
+	 * The "before_render" actions are called before the form opening tag so this cannot be used or additional fields to be added.
+	 * The same applies for the "after_render" actions.
+	 * Additional fields should only be added as hidden ones.
 	 * @since 0.1
 	 * @access public
 	 * @see Censeo_Page::render()
+	 * @see Censeo_Options::nonce()
 	 * @return void
 	 */
 	public function render_options() {
+		do_action('censeo_options_before_render');
 		do_action('censeo_options_' . $this->get_id() . '_before_render');
 		
 		?>
@@ -156,12 +176,50 @@ class Censeo_Options extends Censeo_Page {
 			?>
 			
 			<div class="censeo-field-row row-submit">
-				<input type="submit" class="button button-primary" value="<?php esc_attr_e('Save', 'censeo'); ?>" />
+				<?php
+				do_action('censeo_options_hidden_fields');
+				do_action('censeo_options_' . $this->get_id() . '_hidden_fields');
+				?>
+				<input type="submit" name="<?php echo esc_attr($this->id); ?>" class="button button-primary" value="<?php esc_attr_e('Save', 'censeo'); ?>" />
 			</div>
 		</form>
 		<?php
 		
+		do_action('censeo_options_after_render');
 		do_action('censeo_options_' . $this->get_id() . '_after_render');
+	}
+	
+	/**
+	 * Nonce field rendering function
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @return void
+	 */
+	public function nonce() {
+		wp_nonce_field($this->get_nonce_action(), $this->get_nonce_name());
+	}
+	
+	/**
+	 * Nonce action helper function
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @return string
+	 */
+	public function get_nonce_action() {
+		return apply_filters('censeo_options_nonce_action', 'save_' . $this->get_id() . '_options', $this->get_id());
+	}
+	
+	/**
+	 * Nonce name helper function
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @return string
+	 */
+	public function get_nonce_name() {
+		return apply_filters('censeo_options_nonce_name', $this->get_id() . '_nonce', $this->get_id());
 	}
 }
 ?>

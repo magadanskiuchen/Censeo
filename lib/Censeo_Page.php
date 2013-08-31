@@ -157,7 +157,10 @@ class Censeo_Page {
 		<div class="wrap">
 			<h2><?php echo $this->title; ?></h2>
 			
-			<?php do_action('censeo_page_' . $this->get_id() . '_render'); ?>
+			<?php
+			do_action('censeo_page_render');
+			do_action('censeo_page_' . $this->get_id() . '_render');
+			?>
 		</div>
 		<?php
 	}
