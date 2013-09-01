@@ -168,7 +168,7 @@ class Censeo_Options extends Censeo_Page {
 		do_action('censeo_options_' . $this->get_id() . '_before_render');
 		
 		?>
-		<form action="" method="post">
+		<form action="" method="post" class="censeo-form censeo-options-form">
 			<?php
 			foreach ($this->fields as $field) {
 				echo $field->render();
