@@ -1,13 +1,5 @@
-var support = {};
-
-(function () {
-	var i = document.createElement('input');
-	
-	support.placeholder = 'placeholder' in i;
-})();
-
 jQuery(function ($) {
-	if (!support.placeholder) {
+	if (censeo_support && !censeo_support.placeholder) {
 		$('input[placeholder]').each(function () {
 			$this = $(this);
 			
