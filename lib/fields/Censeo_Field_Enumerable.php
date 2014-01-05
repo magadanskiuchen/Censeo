@@ -193,6 +193,8 @@ Class Censeo_Field_Enumerable extends Censeo_Field {
 				break;
 			case Censeo_Field_Enumerable_Render_Variant::SELECT:
 			default:
+				$this->add_class('variant-select');
+				
 				foreach ($this->options as $value => $label) {
 					$markup .= '<option value="' . esc_attr($value) . '"' . ($this->get_value() == $value ? ' selected="selected"' : '') . '>' . $label . '</option>';
 				}
