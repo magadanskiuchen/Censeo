@@ -10,7 +10,7 @@ $fields = array(
 	'Censeo_Field',
 	'Censeo_Field_Number',
 	'Censeo_Field_Enumerable',
-	// 'Censeo_Field_Multiple', # select / checkboxes
+	'Censeo_Field_Multiple',
 	// 'Censeo_Field_Boolean',
 	// 'Censeo_Field_Date',
 	// 'Censeo_Field_Time',
