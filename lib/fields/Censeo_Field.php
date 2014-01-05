@@ -180,7 +180,8 @@ class Censeo_Field {
 	 * @return array $classes The updated array of the HTML classes that would be added to the field markup representation
 	 */
 	public function add_class($class) {
-		$this->classes = array_unique($classes[] = $class);
+		$this->classes[] = $class;
+		$this->classes = array_unique($this->classes);
 		
 		return $this->classes;
 	}

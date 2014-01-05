@@ -9,7 +9,15 @@
 $fields = array(
 	'Censeo_Field',
 	'Censeo_Field_Number',
-	'Censeo_Field_Select',
+	'Censeo_Field_Enumerable',
+	// 'Censeo_Field_Multiple', # select / checkboxes
+	// 'Censeo_Field_Boolean',
+	// 'Censeo_Field_Date',
+	// 'Censeo_Field_Time',
+	// 'Censeo_Field_DateTime',
+	// 'Censeo_Field_Color',
+	// 'Censeo_Field_Location',
+	// 'Censeo_Field_File',
 );
 
 foreach ($fields as $field) {

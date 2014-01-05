@@ -1,8 +1,10 @@
-.censeo-field-row { margin-bottom: 10px; }
+.censeo-field-row { margin-bottom: 10px; font-size: 14px; }
 .censeo-field-row label { display: inline-block; width: 200px; margin-right: 10px; }
-.censeo-field-row .censeo-field { width: 100%; max-width: 25em; }
 
 .censeo-field-row.row-submit { padding-left: 210px; }
+
+.censeo-field { width: 100%; max-width: 25em; }
+.censeo-field-enumerable.variant-radio { display: inline-block; margin: 0; vertical-align: top; }
 
 @media screen and (max-width: 782px) {
 	.censeo-field-row label { font-size: 16px; }
@@ -12,4 +14,6 @@
 	.censeo-field-row label { display: block; padding-bottom: 3px; }
 	
 	.censeo-field-row.row-submit { padding-left: 0px; }
+	
+	.censeo-field-enumerable.variant-radio { padding-top: 4px; }
 }

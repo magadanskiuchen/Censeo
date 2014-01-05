@@ -16,14 +16,14 @@ $test_number->set_min(0);
 $test_number->set_max(10);
 $test_number->set_step(2);
 
-$test_select = new Censeo_Field_Select('test_select', __('Select', 'censeo'));
-$test_select->add_options(array('blue'=>'Blue', 'red'=>'Red', 'yellow'=>'Yellow'));
-// $test_select->set_options(array('No', 'Yes'));
+$test_enumerable = new Censeo_Field_Enumerable('test_enumerable', __('Enumerable', 'censeo'));
+$test_enumerable->add_options(array('No', 'Yes'));
+$test_enumerable->set_render_variant(Censeo_Field_Enumerable_Render_Variant::RADIO);
 
 $options_page->add_fields(array(
 	$test_option,
 	$test_number,
-	$test_select,
+	$test_enumerable,
 ));
 
 
