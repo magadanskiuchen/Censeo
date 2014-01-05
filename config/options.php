@@ -5,7 +5,7 @@ $options_page = new Censeo_Options($id, $title, $capabilities='administrator', $
 */
 
 /////////////////////////////////
-// Options Page//////////////////
+// Options Page /////////////////
 /////////////////////////////////
 $options_page = new Censeo_Options('censeo-options', __('Censeo Options', 'censeo'));
 

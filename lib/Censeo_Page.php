@@ -183,6 +183,7 @@ class Censeo_Page {
 	 * Provides a way to attach a template that will be used to render the page.
 	 * @since 0.1
 	 * @access public
+	 * @param string $template_part The path to the file that should be used as template. Should be provided in a <code>get_template_part()</code> compatible manner
 	 * @return void
 	 * @see Censeo_Page::render_template_part()
 	 */
