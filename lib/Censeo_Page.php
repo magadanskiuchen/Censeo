@@ -32,6 +32,16 @@ class Censeo_Page {
 	protected $parent = false;
 	
 	/**
+	 * Render template
+	 * 
+	 * The template part to be used when renderin the page
+	 * @since 0.1
+	 * @access protected
+	 * @var string
+	 */
+	protected $template = '';
+	
+	/**
 	 * Page title
 	 * 
 	 * The label in the admin panel
@@ -124,6 +134,7 @@ class Censeo_Page {
 	 * @return void
 	 */
 	public function init() {
+		do_action('censeo_page_before_init');
 		do_action('censeo_page_' . $this->get_id() . '_before_init');
 		
 		$page_title = $this->title;
@@ -140,6 +151,7 @@ class Censeo_Page {
 			add_menu_page($page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position);
 		}
 		
+		do_action('censeo_page_after_init');
 		do_action('censeo_page_' . $this->get_id() . '_after_init');
 	}
 	
@@ -163,6 +175,35 @@ class Censeo_Page {
 			?>
 		</div>
 		<?php
+	}
+	
+	/**
+	 * Set a template for page rendering
+	 * 
+	 * Provides a way to attach a template that will be used to render the page.
+	 * @since 0.1
+	 * @access public
+	 * @param string $template_part The path to the file that should be used as template. Should be provided in a <code>get_template_part()</code> compatible manner
+	 * @return void
+	 * @see Censeo_Page::render_template_part()
+	 */
+	public function attach_template($template_part) {
+		$this->template = $template_part;
+		
+		add_action('censeo_page_' . $this->get_id() . '_render', array(&$this, 'render_template_part'));
+	}
+	
+	/**
+	 * Loads the associated template
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @return void
+	 * @see Censeo_Page::attach_template()
+	 * @uses get_template_part
+	 */
+	public function render_template_part() {
+		get_template_part($this->template);
 	}
 }
 ?>
