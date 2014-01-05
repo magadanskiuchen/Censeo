@@ -16,9 +16,14 @@ $test_number->set_min(0);
 $test_number->set_max(10);
 $test_number->set_step(2);
 
+$test_select = new Censeo_Field_Select('test_select', __('Select', 'censeo'));
+$test_select->add_options(array('blue'=>'Blue', 'red'=>'Red', 'yellow'=>'Yellow'));
+// $test_select->set_options(array('No', 'Yes'));
+
 $options_page->add_fields(array(
 	$test_option,
 	$test_number,
+	$test_select,
 ));
 
 
