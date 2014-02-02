@@ -31,10 +31,10 @@ Class Censeo_Field_Multiple extends Censeo_Field {
 	/**
 	 * Field render variant
 	 * 
-	 * The variant in which to render the enumerable field. Valid options are "select" and "checkboxes". Options are present as constants for <code>Censeo_Field_Enumerable_Render_Variant</code> class.
+	 * The variant in which to render the enumerable field. Valid options are "select" and "checkboxes". Options are present as constants for <code>Censeo_Field_Multiple_Render_Variant</code> class.
 	 * @since 0.1
 	 * @access protected
-	 * @see Censeo_Field_Enumerable_Render_Variant
+	 * @see Censeo_Field_Multiple_Render_Variant
 	 * @var string
 	 */
 	protected $render_variant = Censeo_Field_Multiple_Render_Variant::SELECT;
@@ -203,7 +203,7 @@ Class Censeo_Field_Multiple extends Censeo_Field {
 			case Censeo_Field_Multiple_Render_Variant::SELECT:
 			default:
 				$attributes = $this->get_attributes();
-				$markup = '<select ' . $this->get_attr_markup($attributes) . ' multiple size="5">' . $this->render_options() . '</select>';
+				$markup = '<select ' . $this->get_attr_markup($attributes) . ' multiple size="' . $this->get_size() . '">' . $this->render_options() . '</select>';
 				break;
 		}
 		

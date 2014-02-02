@@ -18,7 +18,7 @@ $test_number->set_step(2);
 
 $test_enumerable = new Censeo_Field_Enumerable('test_enumerable', __('Enumerable', 'censeo'));
 $test_enumerable->add_options(array('No', 'Yes'));
-// $test_enumerable->set_render_variant(Censeo_Field_Enumerable_Render_Variant::RADIO);
+$test_enumerable->set_render_variant(Censeo_Field_Enumerable_Render_Variant::RADIO);
 
 $test_multiple = new Censeo_Field_Multiple('test_multiple', __('Multiple', 'censeo'));
 $test_multiple->add_options(array(
@@ -34,11 +34,16 @@ $test_multiple->add_options(array(
 ));
 // $test_multiple->set_render_variant(Censeo_Field_Multiple_Render_Variant::CHECKBOXES);
 
+$test_boolean = new Censeo_Field_Boolean('test_boolean', __('Boolean', 'censeo'));
+$test_boolean->set_render_variant(Censeo_Field_Boolean_Render_Variant::CHECKBOX);
+// $test_boolean->set_render_variant(Censeo_Field_Boolean_Render_Variant::RADIO);
+
 $options_page->add_fields(array(
 	$test_option,
 	$test_number,
 	$test_enumerable,
 	$test_multiple,
+	$test_boolean,
 ));
 
 
