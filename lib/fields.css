@@ -1,3 +1,5 @@
+.censeo-form { padding-top: 10px; }
+
 .censeo-field-row { margin-bottom: 10px; font-size: 14px; }
 .censeo-field-row > * { vertical-align: top;  }
 .censeo-field-row label { display: inline-block; width: 200px; margin-right: 10px; }
