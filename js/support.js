@@ -11,4 +11,9 @@ var censeo_support = (typeof(censeo_support) != 'undefined') ? censeo_support : 
 		i.setAttribute('type', 'number');
 		censeo_support.input_number = i.type === 'number';
 	}
+	
+	if (!censeo_support.hasOwnProperty('input_date')) {
+		i.setAttribute('type', 'date');
+		censeo_support.input_date = i.type === 'date';
+	}
 })();
