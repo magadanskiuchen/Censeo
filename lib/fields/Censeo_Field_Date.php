@@ -28,6 +28,16 @@ class Censeo_Field_Date extends Censeo_Field {
 	protected $format = 'Y-m-d';
 	
 	/**
+	 * Week starts on
+	 * 
+	 * Denotes which day the week starts on -- Sonday (0) or Monday (1)
+	 * @since 0.1
+	 * @access protected
+	 * @var int
+	 */
+	protected $week_starts_on = Censeo_Field_Date_Week_Days::SUNDAY;
+	
+	/**
 	 * Constructor for a new date field
 	 * 
 	 * @since 0.1
@@ -66,6 +76,30 @@ class Censeo_Field_Date extends Censeo_Field {
 	}
 	
 	/**
+	 * Getter for the week start day
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @return int
+	 */
+	public function get_week_starts_on() {
+		return $this->week_starts_on;
+	}
+	
+	/**
+	 * Setter for the week start day
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @param int $day
+	 * @see Censeo_Field_Date_Week_Days
+	 * @return void
+	 */
+	public function set_week_starts_on($day) {
+		$this->week_starts_on = absint($day);
+	}
+	
+	/**
 	 * Returns the render HTML attributes in a form of associative array
 	 * 
 	 * @since 0.1
@@ -76,6 +110,8 @@ class Censeo_Field_Date extends Censeo_Field {
 	protected function get_attributes() {
 		$attributes = parent::get_attributes();
 		$attributes['type'] = 'date';
+		$attributes['data-format'] = str_replace(array('j', 'd', 'z', 'l', 'n', 'm', 'F', 'Y'), array('d', 'dd', 'o', 'D', 'm', 'mm', 'MM', 'yy'), $this->get_format());
+		$attributes['data-week-starts-on'] = $this->get_week_starts_on();
 		
 		return $attributes;
 	}
@@ -110,5 +146,17 @@ class Censeo_Field_Date extends Censeo_Field {
 		wp_enqueue_script('jquery-ui-datepicker');
 		wp_enqueue_style('censeo-jquery-ui-datepicker', '//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css', array(), '1.10.4', 'screen');
 	}
+}
+
+class Censeo_Field_Date_Week_Days {
+	/**
+	 * SUNDAY
+	 */
+	const SUNDAY = 0;
+	
+	/**
+	 * MONDAY
+	 */
+	const MONDAY = 1;
 }
 ?>
