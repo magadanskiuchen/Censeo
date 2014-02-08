@@ -39,6 +39,14 @@ function censeo_after_setup_theme() {
 	
 	add_action('widgets_init', 'censeo_widgets_init');
 	add_action('wp_loaded', 'censeo_wp_loaded');
+	
+	# Register scripts and styles
+	wp_register_style('censeo', get_bloginfo('template_directory') . '/style.css', array(), CENSEO_VERSION, 'all'));
+	wp_register_style('censeo-fields', get_bloginfo('template_directory') . '/lib/fields.css');
+	
+	wp_resiter_script('censeo-support', get_bloginfo('template_directory') . '/js/support.js', array(), CENSEO_VERSION);
+	wp_resiter_script('censeo-functions', get_bloginfo('template_directory') . '/js/func.js', array('jquery', 'censeo-support'), CENSEO_VERSION);
+	wp_resiter_script('censeo-fields', get_bloginfo('template_directory') . '/lib/fields.js', array('jquery', 'censeo-support'), CENSEO_VERSION);
 }
 
 /**
@@ -49,12 +57,12 @@ function censeo_after_setup_theme() {
  */
 function censeo_wp_enqueue_scripts() {
 	# Enqueue styles
-	wp_enqueue_style('censeo', get_bloginfo('template_directory') . '/style.css', array(), CENSEO_VERSION, 'all');
+	wp_enqueue_style('censeo');
 	
 	# Enqueue scripts
 	wp_enqueue_script('jquery');
-	wp_enqueue_script('censeo-support', get_bloginfo('template_directory') . '/js/support.js', array(), CENSEO_VERSION);
-	wp_enqueue_script('censeo-functions', get_bloginfo('template_directory') . '/js/func.js', array('jquery', 'censeo-support'), CENSEO_VERSION);
+	wp_enqueue_script('censeo-support');
+	wp_enqueue_script('censeo-functions');
 }
 
 /**
@@ -65,12 +73,12 @@ function censeo_wp_enqueue_scripts() {
  */
 function censeo_admin_enqueue_scripts() {
 	# Enqueue styles
-	wp_enqueue_style('censeo-fields', get_bloginfo('template_directory') . '/lib/fields.css');
+	wp_enqueue_style('censeo-fields');
 	
 	# Enqueue scripts
 	wp_enqueue_script('jquery');
-	wp_enqueue_script('censeo-support', get_bloginfo('template_directory') . '/js/support.js', array(), CENSEO_VERSION);
-	wp_enqueue_script('censeo-fields', get_bloginfo('template_directory') . '/lib/fields.js', array('jquery', 'censeo-support'), CENSEO_VERSION);
+	wp_enqueue_script('censeo-support');
+	wp_enqueue_script('censeo-fields');
 }
 
 /**
