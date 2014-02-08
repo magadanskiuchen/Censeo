@@ -35,8 +35,11 @@ $test_multiple->add_options(array(
 // $test_multiple->set_render_variant(Censeo_Field_Multiple_Render_Variant::CHECKBOXES);
 
 $test_boolean = new Censeo_Field_Boolean('test_boolean', __('Boolean', 'censeo'));
-$test_boolean->set_render_variant(Censeo_Field_Boolean_Render_Variant::CHECKBOX);
-// $test_boolean->set_render_variant(Censeo_Field_Boolean_Render_Variant::RADIO);
+// $test_boolean->set_render_variant(Censeo_Field_Boolean_Render_Variant::CHECKBOX);
+$test_boolean->set_render_variant(Censeo_Field_Boolean_Render_Variant::RADIO);
+
+$test_date = new Censeo_Field_Date('test_date', __('Date', 'censeo'));
+$test_date->set_week_starts_on(Censeo_Field_Date_Week_Days::MONDAY);
 
 $options_page->add_fields(array(
 	$test_option,
@@ -44,6 +47,7 @@ $options_page->add_fields(array(
 	$test_enumerable,
 	$test_multiple,
 	$test_boolean,
+	$test_date,
 ));
 
 
