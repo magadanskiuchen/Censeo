@@ -23,3 +23,6 @@
 	:matches(.variant-radio, .variant-checkboxes) li { margin-bottom: 10px; } /* in the bright future */
 	.variant-radio li, .variant-checkboxes li { margin-bottom: 10px; } /* for the time being */
 }
+
+/* WordPress unsupported field type */
+input[type="date"] { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box; background-color: #FFF; border: 1px solid #DDD; box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07); }
