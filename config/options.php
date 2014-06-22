@@ -17,7 +17,7 @@ $test_number->set_max(10);
 $test_number->set_step(2);
 
 $test_enumerable = new Censeo_Field_Enumerable('test_enumerable', __('Enumerable', 'censeo'));
-$test_enumerable->add_options(array('No', 'Yes'));
+$test_enumerable->add_options(array('All', 'Rock', 'Pop', 'R&B', 'Metal', 'Heavy Metal'));
 $test_enumerable->set_render_variant(Censeo_Field_Enumerable_Render_Variant::RADIO);
 
 $test_multiple = new Censeo_Field_Multiple('test_multiple', __('Multiple', 'censeo'));
