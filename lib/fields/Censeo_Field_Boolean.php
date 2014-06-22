@@ -110,34 +110,6 @@ Class Censeo_Field_Boolean extends Censeo_Field {
 		
 		switch ($this->render_variant) {
 			case Censeo_Field_Boolean_Render_Variant::CHECKBOX:
-				$markup = $this->render_options();
-				break;
-			case Censeo_Field_Boolean_Render_Variant::RADIO:
-				$markup = $this->render_options();
-				break;
-			case Censeo_Field_Boolean_Render_Variant::SELECT:
-			default:
-				$attributes = $this->get_attributes();
-				$markup = '<select ' . $this->get_attr_markup($attributes) . '>' . $this->render_options() . '</select>'; # TODO: render <select> tag in render_options()
-				break;
-		}
-		
-		return $markup;
-	}
-	
-	/**
-	 * Returns the markup for the element options
-	 * 
-	 * @since 0.1
-	 * @access protected
-	 * @see Censeo_Field_Boolean::render_field()
-	 * @return string The HTML markup for the field options
-	 */
-	protected function render_options() {
-		$markup = '';
-		
-		switch ($this->render_variant) {
-			case Censeo_Field_Boolean_Render_Variant::CHECKBOX:
 				$this->add_class('variant-checkbox');
 				
 				$markup = '<label><input type="checkbox" name="' . esc_attr($this->get_name()) . '" value="1" ' . ($this->get_value() ? 'checked="checked"' : '') . ' /> ' . esc_html($this->label) . '</label>';
@@ -156,8 +128,11 @@ Class Censeo_Field_Boolean extends Censeo_Field {
 			default:
 				$this->add_class('variant-select');
 				
+				$attributes = $this->get_attributes();
+				$markup = '<select ' . $this->get_attr_markup($attributes) . '>';
 				$markup .= '<option value="0"' . ($this->get_value() ? '' : ' selected="selected"') . '>' . __('No', 'censeo') . '</option>';
 				$markup .= '<option value="1"' . ($this->get_value() ? ' selected="selected"' : '') . '>' . __('Yes', 'censeo') . '</option>';
+				$markup .= '</select>';
 				
 				break;
 		}
