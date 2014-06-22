@@ -129,6 +129,7 @@ Class Censeo_Field_Boolean extends Censeo_Field {
 				$this->add_class('variant-select');
 				
 				$attributes = $this->get_attributes();
+				
 				$markup = '<select ' . $this->get_attr_markup($attributes) . '>';
 				$markup .= '<option value="0"' . ($this->get_value() ? '' : ' selected="selected"') . '>' . __('No', 'censeo') . '</option>';
 				$markup .= '<option value="1"' . ($this->get_value() ? ' selected="selected"' : '') . '>' . __('Yes', 'censeo') . '</option>';

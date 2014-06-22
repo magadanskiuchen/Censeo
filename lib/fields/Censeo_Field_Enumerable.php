@@ -157,31 +157,6 @@ Class Censeo_Field_Enumerable extends Censeo_Field {
 		
 		switch ($this->render_variant) {
 			case Censeo_Field_Enumerable_Render_Variant::RADIO:
-				$markup = $this->render_options();
-				break;
-			case Censeo_Field_Enumerable_Render_Variant::SELECT:
-			default:
-				$attributes = $this->get_attributes();
-				$markup = '<select ' . $this->get_attr_markup($attributes) . '>' . $this->render_options() . '</select>'; # TODO: render <select> tag in render_options()
-				break;
-		}
-		
-		return $markup;
-	}
-	
-	/**
-	 * Returns the markup for the element options
-	 * 
-	 * @since 0.1
-	 * @access protected
-	 * @see Censeo_Field_Enumerable::render_field()
-	 * @return string The HTML markup for the field options
-	 */
-	protected function render_options() {
-		$markup = '';
-		
-		switch ($this->render_variant) {
-			case Censeo_Field_Enumerable_Render_Variant::RADIO:
 				$this->add_class('variant-radio');
 				$markup = '<ul class="' . esc_attr(implode(' ', $this->get_classes())) . '">';
 				
@@ -195,9 +170,15 @@ Class Censeo_Field_Enumerable extends Censeo_Field {
 			default:
 				$this->add_class('variant-select');
 				
+				$attributes = $this->get_attributes();
+				
+				$markup = '<select ' . $this->get_attr_markup($attributes) . '>';
+				
 				foreach ($this->options as $value => $label) {
 					$markup .= '<option value="' . esc_attr($value) . '"' . ($this->get_value() == $value ? ' selected="selected"' : '') . '>' . $label . '</option>';
 				}
+				
+				$markup .= '</select>';
 				
 				break;
 		}
