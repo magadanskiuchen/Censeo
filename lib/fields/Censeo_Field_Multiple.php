@@ -203,7 +203,7 @@ Class Censeo_Field_Multiple extends Censeo_Field {
 			case Censeo_Field_Multiple_Render_Variant::SELECT:
 			default:
 				$attributes = $this->get_attributes();
-				$markup = '<select ' . $this->get_attr_markup($attributes) . ' multiple size="' . $this->get_size() . '">' . $this->render_options() . '</select>';
+				$markup = '<select ' . $this->get_attr_markup($attributes) . ' multiple size="' . $this->get_size() . '">' . $this->render_options() . '</select>'; # TODO: render <select> tag in render_options()
 				break;
 		}
 		

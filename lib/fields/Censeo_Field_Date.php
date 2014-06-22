@@ -110,6 +110,7 @@ class Censeo_Field_Date extends Censeo_Field {
 	protected function get_attributes() {
 		$attributes = parent::get_attributes();
 		$attributes['type'] = 'date';
+		$attributes['value'] = date($this->get_format(), $this->get_value());
 		$attributes['data-format'] = str_replace(array('j', 'd', 'z', 'l', 'n', 'm', 'F', 'Y'), array('d', 'dd', 'o', 'D', 'm', 'mm', 'MM', 'yy'), $this->get_format());
 		$attributes['data-week-starts-on'] = $this->get_week_starts_on();
 		

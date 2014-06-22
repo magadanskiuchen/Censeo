@@ -118,7 +118,7 @@ Class Censeo_Field_Boolean extends Censeo_Field {
 			case Censeo_Field_Boolean_Render_Variant::SELECT:
 			default:
 				$attributes = $this->get_attributes();
-				$markup = '<select ' . $this->get_attr_markup($attributes) . '>' . $this->render_options() . '</select>';
+				$markup = '<select ' . $this->get_attr_markup($attributes) . '>' . $this->render_options() . '</select>'; # TODO: render <select> tag in render_options()
 				break;
 		}
 		
