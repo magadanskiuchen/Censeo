@@ -123,7 +123,7 @@ class Censeo_Field {
 	 */
 	public function load_value() {
 		if (isset($_POST[$this->name])) {
-			$this->set_value($_POST[$this->name]);
+			$this->set_value(stripslashes_deep($_POST[$this->name]));
 		}
 	}
 	
