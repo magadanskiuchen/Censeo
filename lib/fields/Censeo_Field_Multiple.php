@@ -198,31 +198,6 @@ Class Censeo_Field_Multiple extends Censeo_Field {
 		
 		switch ($this->render_variant) {
 			case Censeo_Field_Multiple_Render_Variant::CHECKBOXES:
-				$markup = $this->render_options();
-				break;
-			case Censeo_Field_Multiple_Render_Variant::SELECT:
-			default:
-				$attributes = $this->get_attributes();
-				$markup = '<select ' . $this->get_attr_markup($attributes) . ' multiple size="' . $this->get_size() . '">' . $this->render_options() . '</select>'; # TODO: render <select> tag in render_options()
-				break;
-		}
-		
-		return $markup;
-	}
-	
-	/**
-	 * Returns the markup for the element options
-	 * 
-	 * @since 0.1
-	 * @access protected
-	 * @see Censeo_Field_Multiple::render_field()
-	 * @return string The HTML markup for the field options
-	 */
-	protected function render_options() {
-		$markup = '';
-		
-		switch ($this->render_variant) {
-			case Censeo_Field_Multiple_Render_Variant::CHECKBOXES:
 				$this->add_class('variant-checkboxes');
 				$markup = '<ul class="' . esc_attr(implode(' ', $this->get_classes())) . '">';
 				
@@ -236,9 +211,15 @@ Class Censeo_Field_Multiple extends Censeo_Field {
 			default:
 				$this->add_class('variant-select');
 				
+				$attributes = $this->get_attributes();
+				
+				$markup = '<select ' . $this->get_attr_markup($attributes) . ' multiple size="' . $this->get_size() . '">';
+				
 				foreach ($this->options as $value => $label) {
 					$markup .= '<option value="' . esc_attr($value) . '"' . (in_array($value, $this->get_value()) ? ' selected="selected"' : '') . '>' . $label . '</option>';
 				}
+				
+				$markup .= '</select>';
 				
 				break;
 		}
