@@ -16,4 +16,9 @@ var censeo_support = (typeof(censeo_support) != 'undefined') ? censeo_support : 
 		i.setAttribute('type', 'date');
 		censeo_support.input_date = i.type === 'date';
 	}
+	
+	if (!censeo_support.hasOwnProperty('input_time')) {
+		i.setAttribute('type', 'time');
+		censeo_support.input_time = i.type === 'time';
+	}
 })();

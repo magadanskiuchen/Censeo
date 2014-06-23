@@ -29,7 +29,7 @@ class Censeo_Field_Time extends Censeo_Field {
 	public function __construct($name, $label) {
 		parent::__construct($name, $label);
 		
-		// add_action('admin_enqueue_scripts', array(&$this, 'enqueue_scripts')); # TODO: Add JS fallback for time input (https://fgelinas.com/code/timepicker/)
+		add_action('admin_enqueue_scripts', array(&$this, 'enqueue_scripts'));
 	}
 	
 	/**
@@ -61,7 +61,7 @@ class Censeo_Field_Time extends Censeo_Field {
 		if (!empty($value)) {
 			$pm = stripos($value, 'pm') !== false;
 			
-			if (preg_match('/([\d]{1,2}).([\d]{2})/iu', $value, $time)) { # TODO: test with time with hours, minutes and seconds
+			if (preg_match('/([\d]{1,2}).([\d]{2})/iu', $value, $time)) {
 				$hours = $time[1];
 				$minutes = $time[2];
 				
@@ -91,9 +91,8 @@ class Censeo_Field_Time extends Censeo_Field {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		# TODO add proper JS fallback
-		// wp_enqueue_script('jquery-ui-datepicker');
-		// wp_enqueue_style('censeo-jquery-ui-datepicker', '//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css', array(), '1.10.4', 'screen');
+		wp_enqueue_script('jquery-ui-timepicker-addon', get_bloginfo('template_directory') . '/lib/jquery-ui-timepicker-addon.js', array('jquery-ui-datepicker', 'jquery-ui-slider'), '1.4.5');
+		wp_enqueue_style('jquery-ui-timepicker-addon', get_bloginfo('template_directory') . '/lib/jquery-ui-timepicker-addon.css', array(), '1.4.5');
 	}
 	
 	/**
