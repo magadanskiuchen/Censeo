@@ -47,6 +47,7 @@ $test_datetime = new Censeo_Field_DateTime('test_datetime', __('Date-time', 'cen
 
 $test_color = new Censeo_Field_Color('test_color', __('Color', 'censeo'));
 $test_color->set_allow_transparency(true);
+$test_color->set_default_value('#0000FF');
 
 $options_page->add_fields(array(
 	$test_option,
