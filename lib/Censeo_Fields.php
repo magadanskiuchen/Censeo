@@ -14,7 +14,7 @@ $fields = array(
 	'Censeo_Field_Boolean',
 	'Censeo_Field_Date',
 	'Censeo_Field_Time',
-	// 'Censeo_Field_DateTime',
+	'Censeo_Field_DateTime',
 	// 'Censeo_Field_Color',
 	// 'Censeo_Field_Location',
 	// 'Censeo_Field_File',
