@@ -182,6 +182,21 @@ function censeo_get_fields_localization() {
 		'oct' => _x('Oct', 'short_months', 'censeo'),
 		'nov' => _x('Nov', 'short_months', 'censeo'),
 		'dec' => _x('Dec', 'short_months', 'censeo'),
+		
+		'hourText' => _x('Hour', 'timepicker', 'censeo'),
+		'minuteText' => _x('Minute', 'timepicker', 'censeo'),
+		'secondText' => _x('Second', 'timepicker', 'censeo'),
+		'millisecText' => _x('Millisecond', 'timepicker', 'censeo'),
+		'microsecText' => _x('Microsecond', 'timepicker', 'censeo'),
+		'timezoneText' => _x('Timezone', 'timepicker', 'censeo'),
+		'AM' => _x('AM', 'timepicker', 'censeo'),
+		'A' => _x('A', 'timepicker', 'censeo'),
+		'PM' => _x('PM', 'timepicker', 'censeo'),
+		'P' => _x('P', 'timepicker', 'censeo'),
+		'closeText' => _x('Close', 'timepicker', 'censeo'),
+		'currentText' => _x('Now', 'timepicker', 'censeo'),
+		'timeOnlyTitle' => _x('Choose Time', 'timepicker', 'censeo'),
+		'timeText' => _x('Time', 'timepicker', 'censeo'),
 	);
 }
 
