@@ -215,20 +215,5 @@ Class Censeo_Field_Number extends Censeo_Field {
 		
 		return $attributes;
 	}
-	
-	/**
-	 * A renderer function for the field markup itself
-	 * 
-	 * A wrapper markup is separately rendered by the <code>render()</code> class method
-	 * @since 0.1
-	 * @access public
-	 * @see Censeo_Field::render_field()
-	 * @return string The HTML markup for the field itself
-	 */
-	protected function render_field() {
-		$attributes = $this->get_attributes();
-		
-		return '<input ' . $this->get_attr_markup($attributes) . ' />';
-	}
 }
 ?>
