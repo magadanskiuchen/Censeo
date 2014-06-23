@@ -43,7 +43,6 @@ class Censeo_Field_Time extends Censeo_Field {
 	protected function get_attributes() {
 		$attributes = parent::get_attributes();
 		$attributes['type'] = 'time';
-		$attributes['value'] = $this->get_value();
 		
 		return $attributes;
 	}

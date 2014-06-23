@@ -175,7 +175,7 @@ class Censeo_Options extends Censeo_Page {
 			}
 			?>
 			
-			<div class="censeo-field-row row-submit">
+			<div class="censeo-field-row no-label">
 				<?php
 				do_action('censeo_options_hidden_fields');
 				do_action('censeo_options_' . $this->get_id() . '_hidden_fields');

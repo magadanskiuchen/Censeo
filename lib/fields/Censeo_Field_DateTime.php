@@ -28,7 +28,8 @@ class Censeo_Field_DateTime extends Censeo_Field_Time {
 	protected function get_attributes() {
 		$attributes = parent::get_attributes();
 		$attributes['type'] = 'text'; # TODO: change to "datetime-local" once native behavior is not that buggy
-		$attributes['value'] = $this->get_value();
+		$attributes['value'] = date('Y-m-d H:i', strtotime($this->get_value()));
+		
 		return $attributes;
 	}
 	
