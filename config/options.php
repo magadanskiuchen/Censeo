@@ -41,6 +41,8 @@ $test_boolean->set_render_variant(Censeo_Field_Boolean_Render_Variant::RADIO);
 $test_date = new Censeo_Field_Date('test_date', __('Date', 'censeo'));
 $test_date->set_week_starts_on(Censeo_Field_Date_Week_Days::MONDAY);
 
+$test_time = new Censeo_Field_Time('test_time', __('Time', 'censeo'));
+
 $options_page->add_fields(array(
 	$test_option,
 	$test_number,
@@ -48,6 +50,7 @@ $options_page->add_fields(array(
 	$test_multiple,
 	$test_boolean,
 	$test_date,
+	$test_time,
 ));
 
 
