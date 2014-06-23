@@ -18,7 +18,7 @@ $test_number->set_step(2);
 
 $test_enumerable = new Censeo_Field_Enumerable('test_enumerable', __('Enumerable', 'censeo'));
 $test_enumerable->add_options(array('All', 'Rock', 'Pop', 'R&B', 'Metal', 'Heavy Metal'));
-$test_enumerable->set_render_variant(Censeo_Field_Enumerable_Render_Variant::RADIO);
+// $test_enumerable->set_render_variant(Censeo_Field_Enumerable_Render_Variant::RADIO);
 
 $test_multiple = new Censeo_Field_Multiple('test_multiple', __('Multiple', 'censeo'));
 $test_multiple->add_options(array(
@@ -36,12 +36,14 @@ $test_multiple->add_options(array(
 
 $test_boolean = new Censeo_Field_Boolean('test_boolean', __('Boolean', 'censeo'));
 // $test_boolean->set_render_variant(Censeo_Field_Boolean_Render_Variant::CHECKBOX);
-$test_boolean->set_render_variant(Censeo_Field_Boolean_Render_Variant::RADIO);
+// $test_boolean->set_render_variant(Censeo_Field_Boolean_Render_Variant::RADIO);
 
 $test_date = new Censeo_Field_Date('test_date', __('Date', 'censeo'));
 $test_date->set_week_starts_on(Censeo_Field_Date_Week_Days::MONDAY);
 
 $test_time = new Censeo_Field_Time('test_time', __('Time', 'censeo'));
+
+$test_datetime = new Censeo_Field_DateTime('test_datetime', __('Date-time', 'censeo'));
 
 $options_page->add_fields(array(
 	$test_option,
@@ -51,6 +53,7 @@ $options_page->add_fields(array(
 	$test_boolean,
 	$test_date,
 	$test_time,
+	$test_datetime,
 ));
 
 
