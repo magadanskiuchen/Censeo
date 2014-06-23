@@ -91,7 +91,8 @@ class Censeo_Field_Time extends Censeo_Field {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script('jquery-ui-timepicker-addon', get_bloginfo('template_directory') . '/lib/jquery-ui-timepicker-addon.js', array('jquery-ui-datepicker', 'jquery-ui-slider'), '1.4.5');
+		wp_enqueue_script('jquery-ui-slider');
+		wp_enqueue_script('jquery-ui-timepicker-addon', get_bloginfo('template_directory') . '/lib/jquery-ui-timepicker-addon.js', array('jquery-ui-datepicker'), '1.4.5');
 		wp_enqueue_style('jquery-ui-timepicker-addon', get_bloginfo('template_directory') . '/lib/jquery-ui-timepicker-addon.css', array(), '1.4.5');
 	}
 	
