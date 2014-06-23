@@ -11,7 +11,8 @@
 .censeo-field-multiple.variant-checkboxes,
 .censeo-field-boolean.variant-radio { display: inline-block; margin: 0; }
 
-.censeo-field-color + label { display: block; }
+.censeo-field-color + label,
+.wp-picker-container + label { display: block; }
 
 @media screen and (max-width: 639px) {
 	.censeo-field-row .field-label { display: block; padding-bottom: 3px; }

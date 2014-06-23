@@ -28,6 +28,30 @@ Class Censeo_Field_Color extends Censeo_Field {
 	protected $allow_transparency = false;
 	
 	/**
+	 * Default value
+	 * 
+	 * @since 0.1
+	 * @access protected
+	 * @var string
+	 */
+	protected $default_value = '#FFFFFF';
+	
+	/**
+	 * Constructor for a new color field
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @param string $name The name of the field
+	 * @param string $label The user-friendly label of the field
+	 * @return Censeo_Field_Color
+	 */
+	public function __construct($name, $label) {
+		parent::__construct($name, $label);
+		
+		add_action('admin_enqueue_scripts', array(&$this, 'enqueue_scripts'));
+	}
+	
+	/**
 	 * Getter for transparency
 	 * 
 	 * @since 0.1
@@ -51,6 +75,29 @@ Class Censeo_Field_Color extends Censeo_Field {
 	}
 	
 	/**
+	 * Getter for default value
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @return string
+	 */
+	public function get_default_value() {
+		return $this->default_value;
+	}
+	
+	/**
+	 * Setter for default value
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @param boolean $default_value
+	 * @return void
+	 */
+	public function set_default_value($default_value) {
+		$this->default_value = $default_value;
+	}
+	
+	/**
 	 * Validator called when a value is set for the field
 	 * 
 	 * @since 0.1
@@ -63,7 +110,7 @@ Class Censeo_Field_Color extends Censeo_Field {
 		if (!isset($_POST[$this->get_name() . '_allow_transparency']) && preg_match('/(#[0-9a-fA-F]{6})/', $value, $color)) {
 			$value = $color[1];
 		} else {
-			$value = '';
+			$value = $this->get_allow_transparency() ? '' : $this->get_default_value();
 		}
 		
 		return strtoupper($value);
@@ -80,6 +127,7 @@ Class Censeo_Field_Color extends Censeo_Field {
 	protected function get_attributes() {
 		$attributes = parent::get_attributes();
 		$attributes['type'] = 'color';
+		$attributes['data-default-color'] = $this->get_default_value();
 		
 		return $attributes;
 	}
@@ -116,6 +164,18 @@ Class Censeo_Field_Color extends Censeo_Field {
 		}
 		
 		return $field;
+	}
+	
+	/**
+	 * Enqueue scripts for JS enhancements for older browsers
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @return void
+	 */
+	public function enqueue_scripts() {
+		wp_enqueue_script('wp-color-picker');
+		wp_enqueue_style('wp-color-picker');
 	}
 }
 ?>

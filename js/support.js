@@ -26,4 +26,9 @@ var censeo_support = (typeof(censeo_support) != 'undefined') ? censeo_support : 
 		i.setAttribute('type', 'datetime-local');
 		censeo_support.input_datetime_local = i.type === 'datetime-local';
 	}
+	
+	if (!censeo_support.hasOwnProperty('input_color')) {
+		i.setAttribute('type', 'color');
+		censeo_support.input_color = i.type === 'color';
+	}
 })();
