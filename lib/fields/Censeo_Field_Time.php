@@ -61,7 +61,7 @@ class Censeo_Field_Time extends Censeo_Field {
 		if (!empty($value)) {
 			$pm = stripos($value, 'pm') !== false;
 			
-			if (preg_match('/([\d]){1,2}.([\d]){2}/iu', $time)) { # TODO: test with time with hours, minutes and seconds
+			if (preg_match('/([\d]{1,2}).([\d]{2})/iu', $value, $time)) { # TODO: test with time with hours, minutes and seconds
 				$hours = $time[1];
 				$minutes = $time[2];
 				
@@ -76,8 +76,8 @@ class Censeo_Field_Time extends Censeo_Field {
 			}
 		}
 		
-		if (!isset($velue)) {
-			$value = '00:00';
+		if (!isset($value)) {
+			$value = '';
 		}
 		
 		return $value;
@@ -107,7 +107,7 @@ class Censeo_Field_Time extends Censeo_Field {
 	 */
 	public static function leading_zero($number, $digits = 2) {
 		for ($i = strlen($number); $i < $digits; $i++) {
-			$number .= '0' . $number;
+			$number = '0' . $number;
 		}
 		
 		return $number;
