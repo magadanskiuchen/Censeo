@@ -136,7 +136,17 @@ class Censeo_Options extends Censeo_Page {
 		if (check_admin_referer($this->get_nonce_action(), $this->get_nonce_name())) {
 			foreach ($this->fields as &$field) {
 				$field->load_value();
-				update_option($field->get_name(), $field->get_value());
+				
+				$key = $field->get_name();
+				$value = $field->get_value();
+				
+				update_option($key, $value);
+				
+				if ($field->get_multiple_values() && !is_scalar($value)) {
+					foreach ($value as $prop => $prop_value) {
+						update_option($key . '_' . $prop, $prop_value);
+					}
+				}
 			}
 			
 			wp_redirect(add_query_arg('censeo-updated', 1));
