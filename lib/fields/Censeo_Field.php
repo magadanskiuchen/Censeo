@@ -30,6 +30,17 @@ class Censeo_Field {
 	protected $value = '';
 	
 	/**
+	 * Denotes whether the field needs to have multiple values associated with it
+	 * 
+	 * The values would be passed to the container in the form of an (associative) array or an object
+	 * @since 0.1
+	 * @access protected
+	 * @see Censeo_Field::$value
+	 * @var boolean
+	 */
+	protected $multiple_values = false;
+	
+	/**
 	 * Classes for the field
 	 * 
 	 * The classes are applied to the markup tag representing the field.
@@ -109,6 +120,31 @@ class Censeo_Field {
 	 */
 	public function set_value($value) {
 		$this->value = apply_filters('censeo_validate_' . $this->get_name() . '_value', $value, $this);
+	}
+	
+	/**
+	 * Getter for the multiple values property
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @see Censeo_Field::$multiple_values
+	 * @return boolean $multiple_values
+	 */
+	public function get_multiple_values() {
+		return (boolean)$this->multiple_values;
+	}
+	
+	/**
+	 * Setter for the multiple values property
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @param boolean $multiple_values Either true of false whether the field should save multiple values in the database
+	 * @see Censeo_Field::$multiple_values
+	 * @return void
+	 */
+	public function set_multiple_values($multiple_values) {
+		$this->multiple_values = (boolean)$multiple_values;
 	}
 	
 	/**

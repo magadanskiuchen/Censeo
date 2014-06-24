@@ -5,6 +5,7 @@
 .censeo-field-row .field-label { display: inline-block; width: 200px; margin-right: 10px; font-weight: bold; line-height: 29px; }
 
 .no-label { padding-left: 210px; }
+.censeo-location-map-container { height: 300px; margin-left: 210px; }
 
 .censeo-field { width: 100%; max-width: 25em; }
 .censeo-field-enumerable.variant-radio,
