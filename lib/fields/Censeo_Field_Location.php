@@ -48,6 +48,21 @@ Class Censeo_Field_Location extends Censeo_Field {
 	protected $lng = 0;
 	
 	/**
+	 * Constructor for a new location field
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @param string $name The name of the field
+	 * @param string $label The user-friendly label of the field
+	 * @return Censeo_Field_Location
+	 */
+	public function __construct($name, $label) {
+		parent::__construct($name, $label);
+		
+		add_action('admin_enqueue_scripts', array(&$this, 'enqueue_scripts'));
+	}
+	
+	/**
 	 * Getter for the lat property
 	 * 
 	 * @since 0.1
@@ -176,6 +191,17 @@ Class Censeo_Field_Location extends Censeo_Field {
 		);
 		
 		return '<input ' . $this->get_attr_markup($lat_attributes) . ' /><input ' . $this->get_attr_markup($lng_attributes) . ' /><div ' . $this->get_attr_markup($map_container_attributes) . '></div>';
+	}
+	
+	/**
+	 * Enqueue scripts for JS functionality
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @return void
+	 */
+	public function enqueue_scripts() {
+		wp_enqueue_script('google-maps', '//maps.googleapis.com/maps/api/js?v=3.16', array(), '3.16');
 	}
 }
 ?>
