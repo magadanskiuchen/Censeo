@@ -49,6 +49,8 @@ $test_color = new Censeo_Field_Color('test_color', __('Color', 'censeo'));
 $test_color->set_allow_transparency(true);
 $test_color->set_default_value('#0000FF');
 
+$test_location = new Censeo_Field_Location('test_location', __('Location', 'censeo'));
+
 $options_page->add_fields(array(
 	$test_option,
 	$test_number,
@@ -59,6 +61,7 @@ $options_page->add_fields(array(
 	$test_time,
 	$test_datetime,
 	$test_color,
+	$test_location,
 ));
 
 
