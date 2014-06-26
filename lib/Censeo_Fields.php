@@ -17,7 +17,7 @@ $fields = array(
 	'Censeo_Field_DateTime',
 	'Censeo_Field_Color',
 	'Censeo_Field_Location',
-	// 'Censeo_Field_File',
+	'Censeo_Field_File',
 );
 
 foreach ($fields as $field) {
