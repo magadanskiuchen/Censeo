@@ -51,6 +51,8 @@ $test_color->set_default_value('#0000FF');
 
 $test_location = new Censeo_Field_Location('test_location', __('Location', 'censeo'));
 
+$test_file = new Censeo_Field_File('test_file', __('File', 'censeo'));
+
 $options_page->add_fields(array(
 	$test_option,
 	$test_number,
@@ -62,6 +64,7 @@ $options_page->add_fields(array(
 	$test_datetime,
 	$test_color,
 	$test_location,
+	$test_file,
 ));
 
 
