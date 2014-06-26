@@ -2,9 +2,10 @@
 
 .censeo-field-row { margin-bottom: 25px; font-size: 14px; }
 .censeo-field-row > * { vertical-align: top; }
-.censeo-field-row .field-label { display: inline-block; width: 200px; margin-right: 10px; font-weight: bold; line-height: 29px; }
+.censeo-field-row .field-label { display: inline-block; float: left; width: 200px; margin-right: 10px; font-weight: bold; line-height: 29px; }
 
 .no-label { padding-left: 210px; }
+label.no-label { line-height: 2.2; }
 .censeo-location-map-container { height: 300px; margin-left: 210px; }
 
 .censeo-field { width: 100%; max-width: 25em; }
@@ -14,16 +15,20 @@
 
 .censeo-field-color + label,
 .wp-picker-container + label { display: block; }
+input[type="color"] { height: 30px; padding: 0; }
 
 @media screen and (max-width: 639px) {
-	.censeo-field-row .field-label { display: block; padding-bottom: 3px; }
+	.censeo-field-row .field-label { display: block; float: none; padding-bottom: 3px; }
 	
 	.no-label { padding-left: 0; }
+	.censeo-location-map-container { height: 66.67vh; margin: 0; }
 	
 	.variant-radio, .variant-checkboxes { padding-top: 4px; }
 	
 	:matches(.variant-radio, .variant-checkboxes) li { margin-bottom: 10px; } /* in the bright future */
 	.variant-radio li, .variant-checkboxes li { margin-bottom: 10px; } /* for the time being */
+	
+	input[type="color"] { height: 38px; }
 }
 
 /* WordPress unsupported field type */
