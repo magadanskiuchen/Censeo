@@ -30,6 +30,24 @@ Class Censeo_Field_File extends Censeo_Field {
 	protected $classes = array('censeo-field', 'censeo-field-file');
 	
 	/**
+	 * The URL value
+	 * 
+	 * @since 0.1
+	 * @access protected
+	 * @var string
+	 */
+	protected $url = '';
+	
+	/**
+	 * The attachment ID value
+	 * 
+	 * @since 0.1
+	 * @access protected
+	 * @var int
+	 */
+	protected $attachment_id = 0;
+	
+	/**
 	 * Constructor for a new location field
 	 * 
 	 * @since 0.1
@@ -45,6 +63,50 @@ Class Censeo_Field_File extends Censeo_Field {
 	}
 	
 	/**
+	 * Getter for the URL property
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @return string
+	 */
+	public function get_url() {
+		return $this->url;
+	}
+	
+	/**
+	 * Setter for the URL property
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @return void
+	 */
+	public function set_url($url) {
+		$this->url = $url;
+	}
+	
+	/**
+	 * Getter for the attachment id property
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @return int
+	 */
+	public function get_attachment_id() {
+		return absint($this->attachment_id);
+	}
+	
+	/**
+	 * Setter for the attachment id property
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @return void
+	 */
+	public function set_attachment_id($id) {
+		$this->attachment_id = absint($id);
+	}
+	
+	/**
 	 * Getter for the value of the field
 	 * 
 	 * @since 0.1
@@ -57,7 +119,55 @@ Class Censeo_Field_File extends Censeo_Field {
 	public function get_value() {
 		$this->value = array();
 		
+		$this->value['url'] = $this->get_url();
+		$this->value['attachment_id'] = $this->get_attachment_id();
+		
 		return $this->value;
+	}
+	
+	/**
+	 * Gets a potential new value for the field in case of a POST request
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @see Censeo_Field::$value
+	 * @see Censeo_Field::get_value()
+	 * @see Censeo_Field::set_value()
+	 * @return void
+	 */
+	public function load_value() {
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			if (!function_exists('wp_handle_upload')) {
+				require_once(ABSPATH . 'wp-admin' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'file.php');
+			}
+			
+			if (!function_exists('wp_generate_attachment_metadata')) {
+				require_once(ABSPATH . 'wp-admin' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'image.php');
+			}
+			
+			$file_data = wp_handle_upload($_FILES[$this->get_name()], array('test_form'=>false));
+			
+			if (isset($file_data['error'])) {
+				wp_die($file_data['error']);
+			} else {
+				$attachment = array(
+					'post_mime_type' => $file_data['type'],
+					'post_title' => preg_replace('/\.[^.]+$/', '', basename($file_data['file'])),
+					'post_content' => '',
+					'post_status' => 'inherit'
+				);
+				
+				$attachment_id = wp_insert_attachment($attachment, $file_data['file'], 0);
+				
+				if (strpos($file_data['type'], 'image') !== false) {
+					$attachment_data = wp_generate_attachment_metadata($attachment_id, $file_data['file']);
+					wp_update_attachment_metadata($attachment_id, $attachment_data);
+				}
+				
+				$this->attachment_id = $attachment_id;
+				$this->url = $file_data['url'];
+			}
+		}
 	}
 	
 	/**
@@ -85,7 +195,15 @@ Class Censeo_Field_File extends Censeo_Field {
 	 * @return mixed The validated value that will be assigned to the field
 	 */
 	public function validate($values) {
-		return $values;
+		if (isset($values['attachment_id'])) {
+			$this->set_attachment_id($values['attachment_id']);
+		}
+		
+		if (isset($values['url'])) {
+			$this->set_url($values['url']);
+		}
+		
+		return $this->get_value();
 	}
 	
 	/**
@@ -103,6 +221,10 @@ Class Censeo_Field_File extends Censeo_Field {
 		$output = '<input type="hidden" name="MAX_FILE_SIZE" value="' . Censeo_Size_Formatter::to_bytes(ini_get('upload_max_filesize')) . '" />';
 		$output .= '<input ' . $this->get_attr_markup($attributes) . ' />';
 		$output .= '<p class="no-label">' . __('Max upload file size:', 'censeo') . ' ' . Censeo_Size_Formatter::to_megabytes(ini_get('upload_max_filesize')) . '</p>';
+		
+		if ($this->get_attachment_id()) {
+			$output .= wp_get_attachment_image($this->get_attachment_id(), 'thumbnail', 1, array('class'=>'no-label'));
+		}
 		
 		return $output;
 	}
