@@ -145,27 +145,33 @@ Class Censeo_Field_File extends Censeo_Field {
 				require_once(ABSPATH . 'wp-admin' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'image.php');
 			}
 			
-			$file_data = wp_handle_upload($_FILES[$this->get_name()], array('test_form'=>false));
+			$file = $_FILES[$this->get_name()];
 			
-			if (isset($file_data['error'])) {
-				wp_die($file_data['error']);
-			} else {
-				$attachment = array(
-					'post_mime_type' => $file_data['type'],
-					'post_title' => preg_replace('/\.[^.]+$/', '', basename($file_data['file'])),
-					'post_content' => '',
-					'post_status' => 'inherit'
-				);
+			if ($file['error'] == 0) {
+				$file_data = wp_handle_upload($file, array('test_form'=>false));
 				
-				$attachment_id = wp_insert_attachment($attachment, $file_data['file'], 0);
-				
-				if (strpos($file_data['type'], 'image') !== false) {
-					$attachment_data = wp_generate_attachment_metadata($attachment_id, $file_data['file']);
-					wp_update_attachment_metadata($attachment_id, $attachment_data);
+				if (!isset($file_data['error'])) {
+					$attachment = array(
+						'post_mime_type' => $file_data['type'],
+						'post_title' => preg_replace('/\.[^.]+$/', '', basename($file_data['file'])),
+						'post_content' => '',
+						'post_status' => 'inherit'
+					);
+					
+					$attachment_id = wp_insert_attachment($attachment, $file_data['file'], 0);
+					
+					if (strpos($file_data['type'], 'image') !== false) {
+						$attachment_data = wp_generate_attachment_metadata($attachment_id, $file_data['file']);
+						wp_update_attachment_metadata($attachment_id, $attachment_data);
+					}
+					
+					$this->attachment_id = $attachment_id;
+					$this->url = $file_data['url'];
 				}
-				
-				$this->attachment_id = $attachment_id;
-				$this->url = $file_data['url'];
+			} else {
+				if (isset($_POST[$this->name])) {
+					$this->set_value(stripslashes_deep($_POST[$this->name]));
+				}
 			}
 		}
 	}
@@ -217,6 +223,9 @@ Class Censeo_Field_File extends Censeo_Field {
 	 */
 	protected function render_field() {
 		$attributes = $this->get_attributes();
+		if (isset($attributes['value'])) {
+			unset($attributes['value']);
+		}
 		
 		$output = '<input type="hidden" name="MAX_FILE_SIZE" value="' . Censeo_Size_Formatter::to_bytes(ini_get('upload_max_filesize')) . '" />';
 		$output .= '<input ' . $this->get_attr_markup($attributes) . ' />';
@@ -224,6 +233,12 @@ Class Censeo_Field_File extends Censeo_Field {
 		
 		if ($this->get_attachment_id()) {
 			$output .= wp_get_attachment_image($this->get_attachment_id(), 'thumbnail', 1, array('class'=>'no-label'));
+			
+			$url_field_attributes = array('type'=>'hidden', 'name'=>$this->get_name() . '[url]', 'value'=>$this->get_url());
+			$attachment_id_field_attributes = array('type'=>'hidden', 'name'=>$this->get_name() . '[attachment_id]', 'value'=>$this->get_attachment_id());
+			
+			$output .= '<input ' . $this->get_attr_markup($url_field_attributes) . ' />';
+			$output .= '<input ' . $this->get_attr_markup($attachment_id_field_attributes) . ' />';
 		}
 		
 		return $output;
