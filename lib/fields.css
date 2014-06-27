@@ -17,6 +17,8 @@ label.no-label { line-height: 2.2; }
 .wp-picker-container + label { display: block; }
 input[type="color"] { height: 30px; padding: 0; }
 
+.censeo-file-preview { width: auto; height: auto; max-width: 150px; max-height: 150px; }
+
 @media screen and (max-width: 639px) {
 	.censeo-field-row .field-label { display: block; float: none; padding-bottom: 3px; }
 	

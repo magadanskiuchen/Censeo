@@ -48,6 +48,15 @@ Class Censeo_Field_File extends Censeo_Field {
 	protected $attachment_id = 0;
 	
 	/**
+	 * Allowed types for the uploaded file
+	 * 
+	 * @since 0.1
+	 * @access protected
+	 * @var string
+	 */
+	protected $file_type = '';
+	
+	/**
 	 * Constructor for a new location field
 	 * 
 	 * @since 0.1
@@ -104,6 +113,28 @@ Class Censeo_Field_File extends Censeo_Field {
 	 */
 	public function set_attachment_id($id) {
 		$this->attachment_id = absint($id);
+	}
+	
+	/**
+	 * Getter for the file type property
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @return int
+	 */
+	public function get_file_type() {
+		return $this->file_type;
+	}
+	
+	/**
+	 * Setter for the file type property
+	 * 
+	 * @since 0.1
+	 * @access public
+	 * @return void
+	 */
+	public function set_file_type($type) {
+		$this->file_type = $type;
 	}
 	
 	/**
@@ -187,6 +218,14 @@ Class Censeo_Field_File extends Censeo_Field {
 	protected function get_attributes() {
 		$attributes = parent::get_attributes();
 		$attributes['type'] = 'file';
+		$attributes['data-button-label'] = __('Select File', 'censeo');
+		$attributes['data-window-label'] = __('Files', 'censeo');
+		$attributes['data-value-type'] = __('Value Type', 'censeo');
+		$attributes['data-file-type'] = $this->get_file_type();
+		
+		if (isset($attributes['value'])) {
+			unset($attributes['value']);
+		}
 		
 		return $attributes;
 	}
@@ -223,16 +262,13 @@ Class Censeo_Field_File extends Censeo_Field {
 	 */
 	protected function render_field() {
 		$attributes = $this->get_attributes();
-		if (isset($attributes['value'])) {
-			unset($attributes['value']);
-		}
 		
 		$output = '<input type="hidden" name="MAX_FILE_SIZE" value="' . Censeo_Size_Formatter::to_bytes(ini_get('upload_max_filesize')) . '" />';
 		$output .= '<input ' . $this->get_attr_markup($attributes) . ' />';
 		$output .= '<p class="no-label">' . __('Max upload file size:', 'censeo') . ' ' . Censeo_Size_Formatter::to_megabytes(ini_get('upload_max_filesize')) . '</p>';
 		
 		if ($this->get_attachment_id()) {
-			$output .= wp_get_attachment_image($this->get_attachment_id(), 'thumbnail', 1, array('class'=>'no-label'));
+			$output .= wp_get_attachment_image($this->get_attachment_id(), 'thumbnail', 1, array('class'=>'no-label censeo-file-preview'));
 			
 			$url_field_attributes = array('type'=>'hidden', 'name'=>$this->get_name() . '[url]', 'value'=>$this->get_url());
 			$attachment_id_field_attributes = array('type'=>'hidden', 'name'=>$this->get_name() . '[attachment_id]', 'value'=>$this->get_attachment_id());
@@ -252,7 +288,7 @@ Class Censeo_Field_File extends Censeo_Field {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script('plupload-handlers');
+		wp_enqueue_media();
 	}
 }
 
