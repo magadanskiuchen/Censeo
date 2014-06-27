@@ -133,7 +133,7 @@ class Censeo_Options extends Censeo_Page {
 	 * @return void
 	 */
 	public function save_field_values() {
-		if (check_admin_referer($this->get_nonce_action(), $this->get_nonce_name())) {
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' && check_admin_referer($this->get_nonce_action(), $this->get_nonce_name())) {
 			foreach ($this->fields as &$field) {
 				$field->load_value();
 				
