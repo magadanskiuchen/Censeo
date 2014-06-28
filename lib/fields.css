@@ -1,12 +1,12 @@
 .censeo-form { padding-top: 10px; }
 
 .censeo-field-row { margin-bottom: 25px; font-size: 14px; }
-.censeo-field-row > * { vertical-align: top; }
 .censeo-field-row .field-label { display: inline-block; float: left; width: 200px; margin-right: 10px; font-weight: bold; line-height: 29px; }
 
-.no-label { padding-left: 210px; }
-label.no-label { line-height: 2.2; }
-.censeo-location-map-container { height: 300px; margin-left: 210px; }
+.censeo-field-column { padding-left: 210px; }
+.censeo-field-column label { line-height: 2.2; }
+
+.censeo-location-map-container { width: 85%; height: 300px; }
 
 .censeo-field { width: 100%; max-width: 25em; }
 .censeo-field-enumerable.variant-radio,
@@ -17,13 +17,13 @@ label.no-label { line-height: 2.2; }
 .wp-picker-container + label { display: block; }
 input[type="color"] { height: 30px; padding: 0; }
 
-.censeo-file-preview { width: auto; height: auto; max-width: 150px; max-height: 150px; }
+.censeo-field-column .attachment-thumbnail { width: auto; height: auto; max-width: 150px; max-height: 150px; }
 
 @media screen and (max-width: 639px) {
 	.censeo-field-row .field-label { display: block; float: none; padding-bottom: 3px; }
 	
-	.no-label { padding-left: 0; }
-	.censeo-location-map-container { height: 66.67vh; margin: 0; }
+	.censeo-field-column { padding-left: 0; }
+	.censeo-location-map-container { width: auto; height: 66.67vh; margin: 0; }
 	
 	.variant-radio, .variant-checkboxes { padding-top: 4px; }
 	

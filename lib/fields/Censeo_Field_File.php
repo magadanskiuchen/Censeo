@@ -265,10 +265,10 @@ Class Censeo_Field_File extends Censeo_Field {
 		
 		$output = '<input type="hidden" name="MAX_FILE_SIZE" value="' . Censeo_Size_Formatter::to_bytes(ini_get('upload_max_filesize')) . '" />';
 		$output .= '<input ' . $this->get_attr_markup($attributes) . ' />';
-		$output .= '<p class="no-label">' . __('Max upload file size:', 'censeo') . ' ' . Censeo_Size_Formatter::to_megabytes(ini_get('upload_max_filesize')) . '</p>';
+		$output .= '<p>' . __('Max upload file size:', 'censeo') . ' ' . Censeo_Size_Formatter::to_megabytes(ini_get('upload_max_filesize')) . '</p>';
 		
 		if ($this->get_attachment_id()) {
-			$output .= wp_get_attachment_image($this->get_attachment_id(), 'thumbnail', 1, array('class'=>'no-label censeo-file-preview'));
+			$output .= wp_get_attachment_image($this->get_attachment_id(), 'thumbnail', 1);
 			
 			$url_field_attributes = array('type'=>'hidden', 'name'=>$this->get_name() . '[url]', 'value'=>$this->get_url());
 			$attachment_id_field_attributes = array('type'=>'hidden', 'name'=>$this->get_name() . '[attachment_id]', 'value'=>$this->get_attachment_id());

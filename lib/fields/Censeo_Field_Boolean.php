@@ -154,7 +154,7 @@ Class Censeo_Field_Boolean extends Censeo_Field {
 		$output = parent::render();
 		
 		if ($this->get_render_variant() == Censeo_Field_Boolean_Render_Variant::CHECKBOX) {
-			$output = '<div class="censeo-field-row no-label">' . $this->render_field() . '</div>';
+			$output = '<div class="censeo-field-row"><div class="censeo-field-column">' . $this->render_field() . '</div></div>';
 		}
 		
 		return $output;

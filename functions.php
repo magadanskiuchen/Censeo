@@ -131,7 +131,7 @@ function censeo_wp_loaded() {
  * @since 0.1
  * @return array
  */
-function censeo_get_fields_localization() {
+function censeo_get_fields_localization() { # TODO: eternalize function into separate file
 	return array(
 		'sunday' => __('Sunday', 'censeo'),
 		'monday' => __('Monday', 'censeo'),
