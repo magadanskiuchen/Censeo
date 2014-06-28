@@ -176,32 +176,34 @@ Class Censeo_Field_File extends Censeo_Field {
 				require_once(ABSPATH . 'wp-admin' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'image.php');
 			}
 			
-			$file = $_FILES[$this->get_name()];
-			
-			if ($file['error'] == 0) {
-				$file_data = wp_handle_upload($file, array('test_form'=>false));
+			if (isset($_FILES[$this->get_name()])) {
+				$file = $_FILES[$this->get_name()];
 				
-				if (!isset($file_data['error'])) {
-					$attachment = array(
-						'post_mime_type' => $file_data['type'],
-						'post_title' => preg_replace('/\.[^.]+$/', '', basename($file_data['file'])),
-						'post_content' => '',
-						'post_status' => 'inherit'
-					);
+				if ($file['error'] == 0) {
+					$file_data = wp_handle_upload($file, array('test_form'=>false));
 					
-					$attachment_id = wp_insert_attachment($attachment, $file_data['file'], 0);
-					
-					if (strpos($file_data['type'], 'image') !== false) {
-						$attachment_data = wp_generate_attachment_metadata($attachment_id, $file_data['file']);
-						wp_update_attachment_metadata($attachment_id, $attachment_data);
+					if (!isset($file_data['error'])) {
+						$attachment = array(
+							'post_mime_type' => $file_data['type'],
+							'post_title' => preg_replace('/\.[^.]+$/', '', basename($file_data['file'])),
+							'post_content' => '',
+							'post_status' => 'inherit'
+						);
+						
+						$attachment_id = wp_insert_attachment($attachment, $file_data['file'], 0);
+						
+						if (strpos($file_data['type'], 'image') !== false) {
+							$attachment_data = wp_generate_attachment_metadata($attachment_id, $file_data['file']);
+							wp_update_attachment_metadata($attachment_id, $attachment_data);
+						}
+						
+						$this->attachment_id = $attachment_id;
+						$this->url = $file_data['url'];
 					}
-					
-					$this->attachment_id = $attachment_id;
-					$this->url = $file_data['url'];
-				}
-			} else {
-				if (!isset($_POST[$this->get_name()]['clear']) && isset($_POST[$this->get_name()])) {
-					$this->set_value(stripslashes_deep($_POST[$this->get_name()]));
+				} else {
+					if (!isset($_POST[$this->get_name()]['clear']) && isset($_POST[$this->get_name()])) {
+						$this->set_value(stripslashes_deep($_POST[$this->get_name()]));
+					}
 				}
 			}
 		}
