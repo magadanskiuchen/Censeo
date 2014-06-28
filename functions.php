@@ -123,6 +123,7 @@ function censeo_widgets_init() {
  */
 function censeo_wp_loaded() {
 	require_once(CENSEO_CONFIG . 'options.php');
+	require_once(CENSEO_CONFIG . 'post_meta.php');
 }
 
 /**

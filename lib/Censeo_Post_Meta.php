@@ -37,7 +37,7 @@ class Censeo_Post_Meta {
 		$this->add_fields($fields);
 	}
 	
-	public function __construct($id, $title, $post_type) {
+	public function __construct($id, $title, $post_type = 'post') {
 		$this->id = sanitize_title_with_dashes($id);
 		$this->title = $title;
 		$this->post_type = $post_type;
