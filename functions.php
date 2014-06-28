@@ -22,6 +22,7 @@ function censeo_after_setup_theme() {
 	
 	require_once(CENSEO_LIB . 'Censeo_Page.php');
 	require_once(CENSEO_LIB . 'Censeo_Options.php');
+	require_once(CENSEO_LIB . 'Censeo_Post_Meta.php');
 	
 	# i18n
 	load_theme_textdomain('censeo', 'lang');
@@ -123,6 +124,7 @@ function censeo_widgets_init() {
  */
 function censeo_wp_loaded() {
 	require_once(CENSEO_CONFIG . 'options.php');
+	require_once(CENSEO_CONFIG . 'post_meta.php');
 }
 
 /**
