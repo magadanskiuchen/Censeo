@@ -13,8 +13,7 @@
 .censeo-field-multiple.variant-checkboxes,
 .censeo-field-boolean.variant-radio { display: inline-block; margin: 0; }
 
-.censeo-field-color + label,
-.wp-picker-container + label { display: block; }
+.alternative-action { display: block; }
 input[type="color"] { height: 30px; padding: 0; }
 
 .censeo-field-column .attachment-thumbnail { width: auto; height: auto; max-width: 150px; max-height: 150px; }
