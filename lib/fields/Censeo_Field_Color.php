@@ -107,7 +107,7 @@ Class Censeo_Field_Color extends Censeo_Field {
 	 * @return mixed The validated value that will be assigned to the field
 	 */
 	public function validate($value) {
-		if (!isset($_POST[$this->get_name() . '_allow_transparency']) && preg_match('/(#[0-9a-fA-F]{6})/', $value, $color)) {
+		if (!isset($_POST[$this->get_name() . '_allow_transparency']) && preg_match('/(#[0-9a-fA-F]{6})/', $value, $color)) { # TODO: make consistent with location and file fields
 			$value = $color[1];
 		} else {
 			$value = $this->get_allow_transparency() ? '' : $this->get_default_value();
@@ -160,7 +160,7 @@ Class Censeo_Field_Color extends Censeo_Field {
 			
 			$transparency_field = '<input ' . $this->get_attr_markup($transparency_field_attributes) . ' />';
 			
-			$field .= '<label>' . $transparency_field . ' ' . __('Transparent', 'censeo') . '</label>';
+			$field .= '<label class="alternative-action">' . $transparency_field . ' ' . __('Transparent', 'censeo') . '</label>';
 		}
 		
 		return $field;

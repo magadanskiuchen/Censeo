@@ -200,8 +200,8 @@ Class Censeo_Field_File extends Censeo_Field {
 					$this->url = $file_data['url'];
 				}
 			} else {
-				if (isset($_POST[$this->name])) {
-					$this->set_value(stripslashes_deep($_POST[$this->name]));
+				if (!isset($_POST[$this->get_name()]['clear']) && isset($_POST[$this->get_name()])) {
+					$this->set_value(stripslashes_deep($_POST[$this->get_name()]));
 				}
 			}
 		}
@@ -269,13 +269,23 @@ Class Censeo_Field_File extends Censeo_Field {
 		
 		if ($this->get_attachment_id()) {
 			$output .= wp_get_attachment_image($this->get_attachment_id(), 'thumbnail', 1);
-			
-			$url_field_attributes = array('type'=>'hidden', 'name'=>$this->get_name() . '[url]', 'value'=>$this->get_url());
-			$attachment_id_field_attributes = array('type'=>'hidden', 'name'=>$this->get_name() . '[attachment_id]', 'value'=>$this->get_attachment_id());
-			
-			$output .= '<input ' . $this->get_attr_markup($url_field_attributes) . ' />';
-			$output .= '<input ' . $this->get_attr_markup($attachment_id_field_attributes) . ' />';
+		} else {
+			$output .= '<img src="" width="150" height="150" alt="" class="attachment-thumbnail" />';
 		}
+		
+		$url_field_attributes = array('type'=>'hidden', 'name'=>$this->get_name() . '[url]', 'value'=>$this->get_url());
+		$attachment_id_field_attributes = array('type'=>'hidden', 'name'=>$this->get_name() . '[attachment_id]', 'value'=>$this->get_attachment_id());
+		
+		$output .= '<input ' . $this->get_attr_markup($url_field_attributes) . ' />';
+		$output .= '<input ' . $this->get_attr_markup($attachment_id_field_attributes) . ' />';
+		
+		$clear_field_attributes = array(
+			'id' => $attributes['id'] . '-clear',
+			'name' => $attributes['name'] . '[clear]',
+			'type' => 'checkbox',
+			'value' => 1,
+		);
+		$output .= '<label class="alternative-action"><input ' . $this->get_attr_markup($clear_field_attributes) . ' /> ' . __('Remove file', 'censeo') . '</label>';
 		
 		return $output;
 	}
