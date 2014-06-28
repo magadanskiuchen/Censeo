@@ -160,7 +160,7 @@ Class Censeo_Field_Color extends Censeo_Field {
 			
 			$transparency_field = '<input ' . $this->get_attr_markup($transparency_field_attributes) . ' />';
 			
-			$field .= '<label class="no-label">' . $transparency_field . ' ' . __('Transparent', 'censeo') . '</label>';
+			$field .= '<label>' . $transparency_field . ' ' . __('Transparent', 'censeo') . '</label>';
 		}
 		
 		return $field;

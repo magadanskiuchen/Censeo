@@ -317,7 +317,7 @@ class Censeo_Field {
 	 * @return string The full HTML markup for the container, label and the field itself
 	 */
 	public function render() {
-		return '<div class="censeo-field-row"><label class="field-label" for="' . esc_attr($this->get_name()) . '">' . esc_html($this->label) . ':</label>' . $this->render_field() . '</div>';
+		return '<div class="censeo-field-row"><label class="field-label" for="' . esc_attr($this->get_name()) . '">' . esc_html($this->label) . ':</label><div class="censeo-field-column">' . $this->render_field() . '</div></div>';
 	}
 }
 ?>
