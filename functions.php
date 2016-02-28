@@ -202,4 +202,48 @@ function censeo_get_fields_localization() { # TODO: eternalize function into sep
 	);
 }
 
+function censeo_heading() {
+	if (is_archive()) {
+		if (is_author()) {
+			$label = get_the_author();
+		} else if (is_category() || is_tag() || is_tax()) {
+			$label = single_term_title();
+		} else if (is_post_type_archive()) {
+			$label = post_type_archive_title('', false);
+		} else if (is_date()) {
+			if (is_year()) {
+				$label = get_the_time('Y');
+			} else if (is_month()) {
+				$label = get_the_time('M Y');
+			} else if (is_day()) {
+				$label = get_the_time(get_option( 'date_format' ));
+			}
+		}
+	} else if (is_singular()) {
+		if (is_page()) {
+			$label = get_the_title();
+		} else {
+			$categories = wp_get_post_categories(get_the_ID());
+			
+			if (!empty($categories)) {
+				$first_cat = get_term($categories[0], 'category');
+				
+				$label = $first_cat->name;
+			}
+		}
+	} else if (is_front_page()) {
+		$label = get_the_title(get_option('page_on_front'));
+	} else if (is_home()) {
+		$label = get_the_title(get_option('page_for_posts'));
+	} else if (is_404()) {
+		$label = __('404', 'censeo');
+	} else if (is_search()) {
+		$label = __('Search', 'censeo');
+	}
+	
+	$label = apply_filters('censeo_heading', $label);
+	
+	return $label;
+}
+
 ?>
