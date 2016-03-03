@@ -232,9 +232,21 @@ function censeo_heading() {
 			}
 		}
 	} else if (is_front_page()) {
-		$label = get_the_title(get_option('page_on_front'));
+		$front_page_id = get_option('page_on_front');
+		
+		if ($front_page_id) {
+			$label = get_the_title($front_page_id);
+		} else {
+			$label = __('Home', 'mf');
+		}
 	} else if (is_home()) {
-		$label = get_the_title(get_option('page_for_posts'));
+		$posts_page_id = get_option('page_for_posts');
+		
+		if ($posts_page_id) {
+			$label = get_the_title($posts_page_id);
+		} else {
+			$label = __('Blog', 'mf');
+		}
 	} else if (is_404()) {
 		$label = __('404', 'censeo');
 	} else if (is_search()) {
