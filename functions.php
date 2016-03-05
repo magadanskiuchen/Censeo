@@ -128,6 +128,23 @@ function censeo_wp_loaded() {
 	require_once(CENSEO_CONFIG . 'post_meta.php');
 }
 
+/**
+ * Helper function to get an appropriate text for a heading tag on any page
+ * 
+ * This will return the following in the mentioned cases:
+ * - author listing page -- the author name
+ * - category, tag or custom taxonomy listing page -- the name of the term
+ * - post type archive -- the name of the post type
+ * - any type of date archive -- the year, month and day depending on what is applicable
+ * - page, blogpost or single page of a custom post type -- the title of the entry
+ * - front page -- the title of the page (if a custom one is used) or the label "Home" if the front page list the latest blogposts
+ * - blog listing -- the title of the page used for blog listing
+ * - 404 -- simply show a "404" as label
+ * - search -- a label "Search"
+ * 
+ * @since 0.2 beta
+ * @return string A label describing the type of page being presented
+ */
 function censeo_heading() {
 	if (is_archive()) {
 		if (is_author()) {
@@ -146,17 +163,7 @@ function censeo_heading() {
 			}
 		}
 	} else if (is_singular()) {
-		if (is_page()) {
-			$label = get_the_title();
-		} else {
-			$categories = wp_get_post_categories(get_the_ID());
-			
-			if (!empty($categories)) {
-				$first_cat = get_term($categories[0], 'category');
-				
-				$label = $first_cat->name;
-			}
-		}
+		$label = get_the_title();
 	} else if (is_front_page()) {
 		$front_page_id = get_option('page_on_front');
 		
@@ -179,6 +186,13 @@ function censeo_heading() {
 		$label = __('Search', 'censeo');
 	}
 	
+	/**
+	 * Override the value returned by the `censeo_heading` function
+	 * 
+	 * @since 0.2 beta
+	 * 
+	 * @param string $label The label originally returned by the function
+	 */
 	$label = apply_filters('censeo_heading', $label);
 	
 	return $label;
