@@ -153,7 +153,9 @@ function censeo_widgets_init() {
  * Callback function for the <code>wp_loaded</code> action.
  * 
  * Load theme deep functionality that requires full setup
- * @since 0.1
+ * 
+ * @since 0.1 alpha
+ * 
  * @return void
  */
 function censeo_wp_loaded() {
@@ -176,6 +178,7 @@ function censeo_wp_loaded() {
  * - search -- a label "Search"
  * 
  * @since 0.2 beta
+ * 
  * @return string A label describing the type of page being presented
  */
 function censeo_heading() {
