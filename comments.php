@@ -12,7 +12,7 @@ if (!post_password_required()) {
 		echo '</h2>';
 		
 		echo '<ul class="commentlist">';
-		wp_list_comments(array(/*'callback' => 'twentytwelve_comment',*/ 'style' => 'ul'));
+		wp_list_comments(array('style' => 'ul'));
 		echo '</ul>';
 		
 		if (get_comment_pages_count() > 1 && get_option('page_comments')) {

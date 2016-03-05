@@ -111,6 +111,7 @@ function censeo_widgets_init() {
 	 * Filter to allow you to chang the widget wrapper tag
 	 * 
 	 * @since 0.2 beta
+	 * 
 	 * @param string The tag
 	 */
 	$widget_tag = apply_filters('censeo_widget_tag', 'div');
@@ -119,6 +120,7 @@ function censeo_widgets_init() {
 	 * Filter to allow you to chang the widget wrapper classes
 	 * 
 	 * @since 0.2 beta
+	 * 
 	 * @param array An array of the classes
 	 */
 	$widget_classes = apply_filters('censeo_widget_classes', array('widget'));
@@ -127,6 +129,7 @@ function censeo_widgets_init() {
 	 * Filter to allow you to chang the widget heading tag
 	 * 
 	 * @since 0.2 beta
+	 * 
 	 * @param string The tag
 	 */
 	$widget_heading_tag = apply_filters('censeo_widget_heading_tag', 'h3');
@@ -135,6 +138,7 @@ function censeo_widgets_init() {
 	 * Filter to allow you to chang the widget heading classes
 	 * 
 	 * @since 0.2 beta
+	 * 
 	 * @param string An array of the classes
 	 */
 	$widget_heading_classes = apply_filters('censeo_widget_heading_classes', array('widget-title'));
