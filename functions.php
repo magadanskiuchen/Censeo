@@ -14,7 +14,7 @@ add_action('after_setup_theme', 'censeo_after_setup_theme');
 /**
  * Setups core theme functionality
  * 
- * @since 0.1
+ * @since 0.1 alpha
  * @return void
  */
 function censeo_after_setup_theme() {
@@ -46,7 +46,7 @@ function censeo_after_setup_theme() {
 /**
  * Setup theme front-end JS and CSS
  * 
- * @since 0.1
+ * @since 0.1 alpha
  * @return void
  */
 function censeo_wp_enqueue_scripts() {
@@ -62,7 +62,7 @@ function censeo_wp_enqueue_scripts() {
 /**
  * Setup theme admin panel JS and CSS
  * 
- * @since 0.1
+ * @since 0.1 alpha
  * @return void
  */
 function censeo_admin_enqueue_scripts() {
@@ -79,7 +79,8 @@ function censeo_admin_enqueue_scripts() {
 /**
  * Set custom format of wp_title
  * 
- * @since 0.1
+ * @since 0.1 alpha
+ * 
  * @param string $title
  * @param string $sep
  * @return string The formatted title
@@ -102,17 +103,49 @@ function censeo_wp_title($title, $sep) {
 /**
  * Register theme sidebars
  * 
- * @since 0.1
+ * @since 0.1 alpha
  * @return void
  */
 function censeo_widgets_init() {
+	/**
+	 * Filter to allow you to chang the widget wrapper tag
+	 * 
+	 * @since 0.2 beta
+	 * @param string The tag
+	 */
+	$widget_tag = apply_filters('censeo_widget_tag', 'div');
+	
+	/**
+	 * Filter to allow you to chang the widget wrapper classes
+	 * 
+	 * @since 0.2 beta
+	 * @param array An array of the classes
+	 */
+	$widget_classes = apply_filters('censeo_widget_classes', array('widget'));
+	
+	/**
+	 * Filter to allow you to chang the widget heading tag
+	 * 
+	 * @since 0.2 beta
+	 * @param string The tag
+	 */
+	$widget_heading_tag = apply_filters('censeo_widget_heading_tag', 'h3');
+	
+	/**
+	 * Filter to allow you to chang the widget heading classes
+	 * 
+	 * @since 0.2 beta
+	 * @param string An array of the classes
+	 */
+	$widget_heading_classes = apply_filters('censeo_widget_heading_classes', array('widget-title'));
+	
 	register_sidebar(array(
 		'name' => __('Default Sidebar', 'censeo'),
 		'id' => 'default-sidebar',
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget' => '</div>',
-		'before_title' => '<h3 class="widget-title">',
-		'after_title' => '</h3>',
+		'before_widget' => '<' . $widget_tag . ' id="%1$s" class="' . implode(' ', $widget_classes) . ' %2$s">',
+		'after_widget' => '</' . $widget_tag . '>',
+		'before_title' => '<' . $widget_heading_tag . ' class="' . implode(' ', $widget_heading_classes) . '">',
+		'after_title' => '</' . $widget_heading_tag . '>',
 	));
 }
 
