@@ -152,38 +152,54 @@ class Censeo_Pagination {
 		return $markup;
 	}
 	
+	public function get_adjacent() {
+		$before = array();
+		$after = array();
+		
+		if ($this->adjacent) {
+			$min_adjacent = max(1, $this->get_page() - $this->adjacent);
+			$max_adjacent = min($this->get_page() + $this->adjacent, $this->get_max_page());
+			
+			for ($i = $min_adjacent; $i <= $max_adjacent; $i++) {
+				if ($i < $this->get_page()) {
+					$before[$i] = $i;
+				} else if ($i > $this->get_page()) {
+					$after[$i] = $i;
+				}
+			}
+		}
+		
+		return array('before' => $before, 'after' => $after);
+	}
+	
+	public function get_big_adjacent() {
+		$before = array();
+		$after = array();
+		
+		if ($this->big_adjacent) {
+			for ($i = $this->big_adjacent; $i < $this->get_max_page(); $i += $this->big_adjacent) {
+				if ($i < $this->get_page()) {
+					$before[$i] = $i;
+				} else if ($i > $this->get_page()) {
+					$after[$i] = $i;
+				}
+			}
+		}
+		
+		return array('before' => $before, 'after' => $after);
+	}
+	
 	public function get_output() {
 		$output = '';
-		$attributes = $this->wrapper_attributes;
 		
 		if ($this->get_max_page() > 0) {
 			$pagination_markup = '';
 			
-			$adjacent_before = array();
-			$adjacent_after = array();
+			$big_adjacent = $this->get_big_adjacent();
+			$small_adjacent = $this->get_adjacent();
 			
-			if ($this->big_adjacent) {
-				for ($i = $this->big_adjacent; $i < $this->get_max_page(); $i += $this->big_adjacent) {
-					if ($i < $this->get_page()) {
-						$adjacent_before[$i] = $i;
-					} else if ($i > $this->get_page()) {
-						$adjacent_after[$i] = $i;
-					}
-				}
-			}
-			
-			if ($this->adjacent) {
-				$min_adjacent = max(1, $this->get_page() - $this->adjacent);
-				$max_adjacent = min($this->get_page() + $this->adjacent, $this->get_max_page());
-				
-				for ($i = $min_adjacent; $i <= $max_adjacent; $i++) {
-					if ($i < $this->get_page()) {
-						$adjacent_before[$i] = $i;
-					} else if ($i > $this->get_page()) {
-						$adjacent_after[$i] = $i;
-					}
-				}
-			}
+			$adjacent_before = $big_adjacent['before'] + $small_adjacent['before'];
+			$adjacent_after = $big_adjacent['after'] + $small_adjacent['after'];
 			
 			ksort($adjacent_before);
 			ksort($adjacent_after);
@@ -204,7 +220,8 @@ class Censeo_Pagination {
 			$pagination_markup .= $this->get_element_markup('next');
 			$pagination_markup .= $this->get_element_markup('last');
 			
-			$attributes = apply_filters('censeo_pagination_output_attributes', $attributes);
+			$attributes = apply_filters('censeo_pagination_output_attributes', $this->wrapper_attributes);
+			
 			$output = sprintf($this->wrapper, $this->wrapper_tag, $this->get_attr_markup($attributes), $pagination_markup);
 		}
 		
