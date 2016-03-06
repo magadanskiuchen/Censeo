@@ -173,6 +173,16 @@ class Censeo_Pagination {
 	public $big_adjacent = 10;
 	
 	/**
+	 * Whether to show ellipsis between "small" and "big" adjacent links
+	 * 
+	 * @since 0.2 beta
+	 * 
+	 * @access public
+	 * @var boolean
+	 */
+	public $ellipsis = true;
+	
+	/**
 	 * Constructor for the pagination class
 	 * 
 	 * You can pass an argument as an associative array to provide a value for any public
@@ -334,6 +344,9 @@ class Censeo_Pagination {
 			case 'current':
 				$label = $this->get_page();
 				break;
+			case '...':
+				$label = '...';
+				break;
 			default:
 				$label = $element;
 				$url = get_pagenum_link($element);
@@ -380,6 +393,8 @@ class Censeo_Pagination {
 			$attributes['class'] .= 'next';
 		} else if ($element === 'current') {
 			$attributes['class'] .= ' current';
+		} else if ($element === '...') {
+			$attributes['class'] .= ' ellipsis';
 		}
 		
 		return $attributes;
@@ -513,14 +528,35 @@ class Censeo_Pagination {
 			$pagination_markup .= $this->get_element_markup('first');
 			$pagination_markup .= $this->get_element_markup('previous');
 			
+			$last_output_adjacent = false;
+			
 			foreach ($adjacent_before as $page => $value) {
+				if (
+					$last_output_adjacent
+					&& $this->ellipsis
+					&& !in_array($last_output_adjacent, $small_adjacent['before'])
+					&& in_array($page, $small_adjacent['before'])
+				) {
+					$pagination_markup .= $this->get_element_markup('...');
+				}
+				
 				$pagination_markup .= $this->get_element_markup($page);
+				$last_output_adjacent = $page;
 			}
 			
 			$pagination_markup .= $this->get_element_markup('current');
 			
 			foreach ($adjacent_after as $page => $value) {
+				if (
+					$this->ellipsis
+					&& in_array($last_output_adjacent, $small_adjacent['after'])
+					&& !in_array($page, $small_adjacent['after'])
+				) {
+					$pagination_markup .= $this->get_element_markup('...');
+				}
+				
 				$pagination_markup .= $this->get_element_markup($page);
+				$last_output_adjacent = $page;
 			}
 			
 			$pagination_markup .= $this->get_element_markup('next');
