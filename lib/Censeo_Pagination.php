@@ -526,6 +526,12 @@ class Censeo_Pagination {
 			$pagination_markup .= $this->get_element_markup('next');
 			$pagination_markup .= $this->get_element_markup('last');
 			
+			/**
+			 * Allows overriding of the pagination wrapper attributes
+			 * 
+			 * @since 0.2 beta
+			 * @param string $wrapper_attributes The default wrapper attributes
+			 */
 			$attributes = apply_filters('censeo_pagination_output_attributes', $this->wrapper_attributes);
 			
 			$output = sprintf($this->wrapper, $this->wrapper_tag, $this->get_attr_markup($attributes), $pagination_markup);
