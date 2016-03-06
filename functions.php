@@ -21,6 +21,8 @@ function censeo_after_setup_theme() {
 	require_once(CENSEO_LIB . 'default-widgets.php');
 	require_once(CENSEO_LIB . 'i18n.php');
 	
+	require_once(CENSEO_LIB . 'Censeo_Pagination.php');
+	
 	require_once(CENSEO_LIB . 'Censeo_Page.php');
 	require_once(CENSEO_LIB . 'Censeo_Options.php');
 	require_once(CENSEO_LIB . 'Censeo_Post_Meta.php');

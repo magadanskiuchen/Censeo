@@ -5,6 +5,8 @@ if (have_posts()) {
 		
 		get_template_part('post', get_post_format());
 	}
+	
+	get_template_part('pagination');
 } else {
 	get_search_form();
 }
