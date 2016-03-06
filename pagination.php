@@ -1,5 +1,5 @@
 <?php
-$pagination = new Censeo_Pagination(array('previous'=>true, 'next'=>true));
+$pagination = new Censeo_Pagination();
 
 echo $pagination->get_output();
 ?>
