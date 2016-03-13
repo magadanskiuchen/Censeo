@@ -183,7 +183,7 @@ class Censeo_Pagination {
 	public $ellipsis = true;
 	
 	/**
-	 * Stores a copy of the global `$multipage` variable.
+	 * Denotes whether the pagination is for a single paginated article based on the global `$multipage` variable.
 	 * 
 	 * Applies only to paginated single posts.
 	 * 
@@ -192,7 +192,7 @@ class Censeo_Pagination {
 	 * @access private
 	 * @var boolean
 	 */
-	private $multipage = false;
+	private $single_paginated = false;
 	
 	/**
 	 * Constructor for the pagination class
@@ -220,7 +220,7 @@ class Censeo_Pagination {
 			$this->query = $GLOBALS['wp_query'];
 		}
 		
-		$this->multipage = $multipage;
+		$this->single_paginated = apply_filters('censeo_pagination_is_single_paginated', ($multipage && is_single()));
 		
 		add_filter('censeo_pagination_element_markup_attributes', array(&$this, 'element_markup_attributes'), 10, 2);
 	}
@@ -270,7 +270,7 @@ class Censeo_Pagination {
 	public function get_page() {
 		$page = 1;
 		
-		if ($this->multipage) { // paginated single article
+		if ($this->single_paginated) { // paginated single article
 			global $page;
 		} else { // listing page
 			$page = max($this->query->get('paged'), 1);
@@ -290,7 +290,7 @@ class Censeo_Pagination {
 	public function get_max_page() {
 		$max_page = 1;
 		
-		if ($this->multipage) { // paginated single article
+		if ($this->single_paginated) { // paginated single article
 			global $numpages;
 			
 			$max_page = $numpages;
@@ -419,7 +419,7 @@ class Censeo_Pagination {
 	public function get_pagenum_link($pagenum) {
 		$link = '';
 		
-		if ($this->multipage) { // paginated single article
+		if ($this->single_paginated) { // paginated single article
 			$anchor = _wp_link_page($pagenum);
 			$link = preg_replace('/<a href="([^"]*)">/', '$1', $anchor);
 		} else { // listing page
@@ -641,10 +641,10 @@ class Censeo_Pagination {
 	 * @return string The markup for the pagination
 	 * @see self::get_output()
 	 */
-	public function get_post_multipage_links() {
+	public function get_post_single_paginated_links() {
 		$output = '';
 		
-		if ($this->multipage) {
+		if ($this->single_paginated) {
 			$pagination_markup = '';
 			
 			$pagination_markup .= $this->get_element_markup('first');
@@ -688,8 +688,8 @@ class Censeo_Pagination {
 	public function get_output() {
 		$output = '';
 		
-		if ($this->query->is_singular() && $this->multipage) {
-			$output = $this->get_post_multipage_links();
+		if ($this->query->is_singular() && $this->single_paginated) {
+			$output = $this->get_post_single_paginated_links();
 		} else {
 			$output = $this->get_listing_links();
 		}
