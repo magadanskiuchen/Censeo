@@ -183,6 +183,18 @@ class Censeo_Pagination {
 	public $ellipsis = true;
 	
 	/**
+	 * Stores a copy of the global `$multipage` variable.
+	 * 
+	 * Applies only to paginated single posts.
+	 * 
+	 * @since 0.2 beta
+	 * 
+	 * @access private
+	 * @var boolean
+	 */
+	private $multipage = false;
+	
+	/**
 	 * Constructor for the pagination class
 	 * 
 	 * You can pass an argument as an associative array to provide a value for any public
@@ -196,6 +208,8 @@ class Censeo_Pagination {
 	 * @return Censeo_Pagination
 	 */
 	public function __construct($args = array()) {
+		global $multipage;
+		
 		$args = wp_parse_args($args, self::get_defaults());
 		
 		foreach ($args as $prop => $value) {
@@ -205,6 +219,8 @@ class Censeo_Pagination {
 		if (!$this->query instanceof WP_Query) {
 			$this->query = $GLOBALS['wp_query'];
 		}
+		
+		$this->multipage = $multipage;
 		
 		add_filter('censeo_pagination_element_markup_attributes', array(&$this, 'element_markup_attributes'), 10, 2);
 	}
@@ -252,7 +268,15 @@ class Censeo_Pagination {
 	 * @return integer The current page
 	 */
 	public function get_page() {
-		return max($this->query->get('paged'), 1);
+		$page = 1;
+		
+		if ($this->multipage) { // paginated single article
+			global $page;
+		} else { // listing page
+			$page = max($this->query->get('paged'), 1);
+		}
+		
+		return $page;
 	}
 	
 	/**
@@ -264,7 +288,17 @@ class Censeo_Pagination {
 	 * @return integer The last page's number
 	 */
 	public function get_max_page() {
-		return $this->query->max_num_pages;
+		$max_page = 1;
+		
+		if ($this->multipage) { // paginated single article
+			global $numpages;
+			
+			$max_page = $numpages;
+		} else { // listing page
+			$max_page = $this->query->max_num_pages;
+		}
+		
+		return $max_page;
 	}
 	
 	/**
@@ -327,19 +361,19 @@ class Censeo_Pagination {
 		switch ($element) {
 			case 'first':
 				$label = __('First', 'censeo');
-				$url = get_pagenum_link(1);
+				$url = $this->get_pagenum_link(1);
 				break;
 			case 'last':
 				$label = __('Last', 'censeo');
-				$url = get_pagenum_link($this->get_max_page());
+				$url = $this->get_pagenum_link($this->get_max_page());
 				break;
 			case 'previous':
 				$label = __('Previous', 'censeo');
-				$url = get_pagenum_link($this->get_page() - 1);
+				$url = $this->get_pagenum_link($this->get_page() - 1);
 				break;
 			case 'next':
 				$label = __('Next', 'censeo');
-				$url = get_pagenum_link($this->get_page() + 1);
+				$url = $this->get_pagenum_link($this->get_page() + 1);
 				break;
 			case 'current':
 				$label = $this->get_page();
@@ -349,7 +383,7 @@ class Censeo_Pagination {
 				break;
 			default:
 				$label = $element;
-				$url = get_pagenum_link($element);
+				$url = $this->get_pagenum_link($element);
 				break;
 		}
 		
@@ -367,6 +401,29 @@ class Censeo_Pagination {
 			$link = '<a href="' . $url . '">' . $label . '</a>';
 		} else {
 			$link = '<a>' . $label . '</a>';
+		}
+		
+		return $link;
+	}
+	
+	/**
+	 * Helper function got retrieving link to specific page number.
+	 * 
+	 * The function handles cases where the link should be to a page from a listing page
+	 * or a page from a single post that has been paginated.
+	 * 
+	 * @since 0.2 beta
+	 * @param  integer $pagenum The page you'd like to get link to
+	 * @return string           The URL to the page
+	 */
+	public function get_pagenum_link($pagenum) {
+		$link = '';
+		
+		if ($this->multipage) { // paginated single article
+			$anchor = _wp_link_page($pagenum);
+			$link = preg_replace('/<a href="([^"]*)">/', '$1', $anchor);
+		} else { // listing page
+			$link = get_pagenum_link($pagenum);
 		}
 		
 		return $link;
@@ -412,20 +469,24 @@ class Censeo_Pagination {
 		$link = '';
 		$markup = '';
 		
-		if ($this->pass_conditions($element)) {
-			$link = $this->get_link($element);
-		}
-		
-		if (!empty($link)) {
-			/**
-			 * Allows overriding of the attributes that will be added to the element
-			 * 
-			 * @since 0.2 beta
-			 * @param array  $element_attributes The default attributes for the element
-			 * @param string $element The type of element itself
-			 */
-			$attributes = apply_filters('censeo_pagination_element_markup_attributes', $this->element_attributes, $element);
-			$markup = sprintf($this->element, $this->element_tag, $this->get_attr_markup($attributes), $link);
+		if (is_numeric($element) && $element == $this->get_page()) { // special case where element is current element
+			$markup = $this->get_element_markup('current');
+		} else { // non-special case
+			if ($this->pass_conditions($element)) {
+				$link = $this->get_link($element);
+			}
+			
+			if (!empty($link)) {
+				/**
+				 * Allows overriding of the attributes that will be added to the element
+				 * 
+				 * @since 0.2 beta
+				 * @param array  $element_attributes The default attributes for the element
+				 * @param string $element The type of element itself
+				 */
+				$attributes = apply_filters('censeo_pagination_element_markup_attributes', $this->element_attributes, $element);
+				$markup = sprintf($this->element, $this->element_tag, $this->get_attr_markup($attributes), $link);
+			}
 		}
 		
 		return $markup;
@@ -497,20 +558,15 @@ class Censeo_Pagination {
 	}
 	
 	/**
-	 * A function that returns the output for the pagination
-	 * 
-	 * Echo the results of the function to show the pagination itself.
-	 * In case you need to make adjustments to that try using the <code>wrapper</code>,
-	 * <code>wrapper_tag</code>, <code>wrapper_attributes</code>, <code>element</code>,
-	 * <code>element_tag</code>, <code>element_attributes</code> properties for the class
-	 * as well as the filters that are available for it.
+	 * Returns the markup for pagination for a listing page
 	 * 
 	 * @since 0.2 beta
 	 * 
 	 * @access public
-	 * @return string The full HTML code for the pagination
+	 * @return string The markup for the pagination
+	 * @see self::get_output()
 	 */
-	public function get_output() {
+	public function get_listing_links() {
 		$output = '';
 		
 		if ($this->get_max_page() > 0) {
@@ -571,6 +627,71 @@ class Censeo_Pagination {
 			$attributes = apply_filters('censeo_pagination_output_attributes', $this->wrapper_attributes);
 			
 			$output = sprintf($this->wrapper, $this->wrapper_tag, $this->get_attr_markup($attributes), $pagination_markup);
+		}
+		
+		return $output;
+	}
+	
+	/**
+	 * Returns the markup for pagination for a single paginated article
+	 * 
+	 * @since 0.2 beta
+	 * 
+	 * @access public
+	 * @return string The markup for the pagination
+	 * @see self::get_output()
+	 */
+	public function get_post_multipage_links() {
+		$output = '';
+		
+		if ($this->multipage) {
+			$pagination_markup = '';
+			
+			$pagination_markup .= $this->get_element_markup('first');
+			$pagination_markup .= $this->get_element_markup('previous');
+			
+			for ($i=1; $i <= $this->get_max_page(); $i++) {
+				$pagination_markup .= $this->get_element_markup($i);
+			}
+			
+			$pagination_markup .= $this->get_element_markup('next');
+			$pagination_markup .= $this->get_element_markup('last');
+			
+			/**
+			 * Allows overriding of the pagination wrapper attributes
+			 * 
+			 * @since 0.2 beta
+			 * @param string $wrapper_attributes The default wrapper attributes
+			 */
+			$attributes = apply_filters('censeo_pagination_output_attributes', $this->wrapper_attributes);
+			
+			$output = sprintf($this->wrapper, $this->wrapper_tag, $this->get_attr_markup($attributes), $pagination_markup);
+		}
+		
+		return $output;
+	}
+	
+	/**
+	 * A function that returns the output for the pagination
+	 * 
+	 * Echo the results of the function to show the pagination itself.
+	 * In case you need to make adjustments to that try using the <code>wrapper</code>,
+	 * <code>wrapper_tag</code>, <code>wrapper_attributes</code>, <code>element</code>,
+	 * <code>element_tag</code>, <code>element_attributes</code> properties for the class
+	 * as well as the filters that are available for it.
+	 * 
+	 * @since 0.2 beta
+	 * 
+	 * @access public
+	 * @return string The full HTML code for the pagination
+	 */
+	public function get_output() {
+		$output = '';
+		
+		if ($this->query->is_singular() && $this->multipage) {
+			$output = $this->get_post_multipage_links();
+		} else {
+			$output = $this->get_listing_links();
 		}
 		
 		return $output;
