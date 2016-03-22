@@ -309,7 +309,7 @@ class Censeo_Pagination {
 	 * @param  array  $attr An associative array of the attributes to be set.
 	 * @return string       A ready-to-use string of attributes for an HTML tag
 	 */
-	public function get_attr_markup(array $attr) {
+	public static function get_attr_markup(array $attr) {
 		$markup = '';
 		
 		foreach ($attr as $attr_name => $attr_val) {
@@ -485,7 +485,7 @@ class Censeo_Pagination {
 				 * @param string $element The type of element itself
 				 */
 				$attributes = apply_filters('censeo_pagination_element_markup_attributes', $this->element_attributes, $element);
-				$markup = sprintf($this->element, $this->element_tag, $this->get_attr_markup($attributes), $link);
+				$markup = sprintf($this->element, $this->element_tag, self::get_attr_markup($attributes), $link);
 			}
 		}
 		
@@ -626,7 +626,7 @@ class Censeo_Pagination {
 			 */
 			$attributes = apply_filters('censeo_pagination_output_attributes', $this->wrapper_attributes);
 			
-			$output = sprintf($this->wrapper, $this->wrapper_tag, $this->get_attr_markup($attributes), $pagination_markup);
+			$output = sprintf($this->wrapper, $this->wrapper_tag, self::get_attr_markup($attributes), $pagination_markup);
 		}
 		
 		return $output;
@@ -665,7 +665,7 @@ class Censeo_Pagination {
 			 */
 			$attributes = apply_filters('censeo_pagination_output_attributes', $this->wrapper_attributes);
 			
-			$output = sprintf($this->wrapper, $this->wrapper_tag, $this->get_attr_markup($attributes), $pagination_markup);
+			$output = sprintf($this->wrapper, $this->wrapper_tag, self::get_attr_markup($attributes), $pagination_markup);
 		}
 		
 		return $output;
