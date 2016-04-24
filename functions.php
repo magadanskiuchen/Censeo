@@ -5,7 +5,7 @@
  * @package Censeo
  */
 
-define('CENSEO_VERSION', '0.1');
+define('CENSEO_VERSION', '0.2');
 define('CENSEO_LIB', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR);
 define('CENSEO_CONFIG', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR);
 

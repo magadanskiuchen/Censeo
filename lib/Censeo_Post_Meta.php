@@ -104,9 +104,25 @@ class Censeo_Post_Meta {
 		return apply_filters('censeo_post_meta_nonce_name', $this->get_id() . '_nonce', $this->get_id());
 	}
 	
+	public function get_field_value(&$field, $post_id, $meta_key, $single = false) {
+		$field_value = '';
+		
+		$post_id = absint($post_id);
+		$raw_meta = get_post_meta($post_id);
+		
+		if (!isset($raw_meta[$meta_key])) {
+			$field_value = $field->get_default_value();
+		} else {
+			$field_value = get_post_meta($post_id, $meta_key, $single);
+		}
+		
+		return $field_value;
+	}
+	
 	public function load_field_values() {
 		foreach ($this->fields as &$field) {
-			$field->set_value(get_post_meta($this->post_id, $field->get_name(), true));
+			$value = $this->get_field_value($field, $this->post_id, $field->get_name(), true);
+			$field->set_value($value);
 		}
 	}
 	

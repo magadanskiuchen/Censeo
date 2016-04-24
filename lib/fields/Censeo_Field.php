@@ -30,6 +30,16 @@ class Censeo_Field {
 	protected $value = '';
 	
 	/**
+	 * Default value for the field.
+	 * 
+	 * In case there is no information saved already for the field, it's value may optionally be prepopulated
+	 * with some default vlue.
+	 * 
+	 * @since 0.2 beta
+	 */
+	protected $default_value = '';
+	
+	/**
 	 * Denotes whether the field needs to have multiple values associated with it
 	 * 
 	 * The values would be passed to the container in the form of an (associative) array or an object
@@ -120,6 +130,33 @@ class Censeo_Field {
 	 */
 	public function set_value($value) {
 		$this->value = apply_filters('censeo_validate_' . $this->get_name() . '_value', $value, $this);
+	}
+	
+	/**
+	 * Getter for the default value of the field
+	 * 
+	 * @since 0.2 beta
+	 * @access public
+	 * @see Censeo_Field::$default_value
+	 * @see Censeo_Field::set_defualt_value()
+	 * @return mixed $default_value The <code>$default_value</code> property of the field
+	 */
+	public function get_default_value() {
+		return $this->default_value;
+	}
+	
+	/**
+	 * Setter for the default value of the field
+	 * 
+	 * @since 0.2 beta
+	 * @access public
+	 * @param string $value The default value to be assigned to the field
+	 * @see Censeo_Field::$default_value
+	 * @see Censeo_Field::get_default_value()
+	 * @return void
+	 */
+	public function set_default_value($value) {
+		$this->default_value = apply_filters('censeo_' . $this->get_name() . '_default_value', $value, $this);
 	}
 	
 	/**
