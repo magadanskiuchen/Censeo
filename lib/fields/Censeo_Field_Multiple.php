@@ -213,7 +213,7 @@ Class Censeo_Field_Multiple extends Censeo_Field {
 				
 				$attributes = $this->get_attributes();
 				
-				$markup = '<select ' . $this->get_attr_markup($attributes) . ' multiple size="' . $this->get_size() . '">';
+				$markup = '<select ' . censeo_get_attr_markup($attributes) . ' multiple size="' . $this->get_size() . '">';
 				
 				foreach ($this->options as $value => $label) {
 					$markup .= '<option value="' . esc_attr($value) . '"' . (in_array($value, $this->get_value()) ? ' selected="selected"' : '') . '>' . $label . '</option>';

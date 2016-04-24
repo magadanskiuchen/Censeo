@@ -172,7 +172,7 @@ Class Censeo_Field_Enumerable extends Censeo_Field {
 				
 				$attributes = $this->get_attributes();
 				
-				$markup = '<select ' . $this->get_attr_markup($attributes) . '>';
+				$markup = '<select ' . censeo_get_attr_markup($attributes) . '>';
 				
 				foreach ($this->options as $value => $label) {
 					$markup .= '<option value="' . esc_attr($value) . '"' . ($this->get_value() == $value ? ' selected="selected"' : '') . '>' . $label . '</option>';

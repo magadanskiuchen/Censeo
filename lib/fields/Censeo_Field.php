@@ -304,7 +304,7 @@ class Censeo_Field {
 	protected function render_field() {
 		$attributes = $this->get_attributes();
 		
-		return '<input ' . $this->get_attr_markup($attributes) . ' />';
+		return '<input ' . censeo_get_attr_markup($attributes) . ' />';
 	}
 	
 	/**
@@ -317,7 +317,7 @@ class Censeo_Field {
 	 * @return string The full HTML markup for the container, label and the field itself
 	 */
 	public function render() {
-		return '<div class="censeo-field-row"><label class="field-label" for="' . esc_attr($this->get_name()) . '">' . esc_html($this->label) . ':</label><div class="censeo-field-column">' . $this->render_field() . '</div></div>';
+		return '<div class="censeo-field-row"><label class="field-label" for="' . esc_attr($this->get_name()) . '">' . $this->label . ':</label><div class="censeo-field-column">' . $this->render_field() . '</div></div>';
 	}
 }
 ?>

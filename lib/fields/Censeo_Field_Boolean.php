@@ -112,7 +112,7 @@ Class Censeo_Field_Boolean extends Censeo_Field {
 			case Censeo_Field_Boolean_Render_Variant::CHECKBOX:
 				$this->add_class('variant-checkbox');
 				
-				$markup = '<label><input type="checkbox" name="' . esc_attr($this->get_name()) . '" value="1" ' . ($this->get_value() ? 'checked="checked"' : '') . ' /> ' . esc_html($this->label) . '</label>';
+				$markup = '<label><input type="checkbox" name="' . esc_attr($this->get_name()) . '" value="1" ' . ($this->get_value() ? 'checked="checked"' : '') . ' /> ' . $this->label . '</label>';
 				
 				break;
 			case Censeo_Field_Boolean_Render_Variant::RADIO:
@@ -130,7 +130,7 @@ Class Censeo_Field_Boolean extends Censeo_Field {
 				
 				$attributes = $this->get_attributes();
 				
-				$markup = '<select ' . $this->get_attr_markup($attributes) . '>';
+				$markup = '<select ' . censeo_get_attr_markup($attributes) . '>';
 				$markup .= '<option value="0"' . ($this->get_value() ? '' : ' selected="selected"') . '>' . __('No', 'censeo') . '</option>';
 				$markup .= '<option value="1"' . ($this->get_value() ? ' selected="selected"' : '') . '>' . __('Yes', 'censeo') . '</option>';
 				$markup .= '</select>';

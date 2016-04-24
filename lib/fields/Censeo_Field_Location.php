@@ -190,7 +190,7 @@ Class Censeo_Field_Location extends Censeo_Field {
 			'class' => 'censeo-location-map-container',
 		);
 		
-		return '<input ' . $this->get_attr_markup($lat_attributes) . ' /><input ' . $this->get_attr_markup($lng_attributes) . ' /><div ' . $this->get_attr_markup($map_container_attributes) . '></div>';
+		return '<input ' . censeo_get_attr_markup($lat_attributes) . ' /><input ' . censeo_get_attr_markup($lng_attributes) . ' /><div ' . censeo_get_attr_markup($map_container_attributes) . '></div>';
 	}
 	
 	/**

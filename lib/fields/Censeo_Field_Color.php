@@ -144,7 +144,7 @@ Class Censeo_Field_Color extends Censeo_Field {
 	protected function render_field() {
 		$attributes = $this->get_attributes();
 		
-		$field = '<input ' . $this->get_attr_markup($attributes) . ' />';
+		$field = '<input ' . censeo_get_attr_markup($attributes) . ' />';
 		
 		if ($this->get_allow_transparency()) {
 			$transparency_field_attributes = array(
@@ -158,7 +158,7 @@ Class Censeo_Field_Color extends Censeo_Field {
 				$transparency_field_attributes['checked'] = 'checked';
 			}
 			
-			$transparency_field = '<input ' . $this->get_attr_markup($transparency_field_attributes) . ' />';
+			$transparency_field = '<input ' . censeo_get_attr_markup($transparency_field_attributes) . ' />';
 			
 			$field .= '<label class="alternative-action">' . $transparency_field . ' ' . __('Transparent', 'censeo') . '</label>';
 		}

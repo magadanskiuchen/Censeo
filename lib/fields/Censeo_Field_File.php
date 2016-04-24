@@ -264,7 +264,7 @@ Class Censeo_Field_File extends Censeo_Field {
 		$attributes = $this->get_attributes();
 		
 		$output = '<input type="hidden" name="MAX_FILE_SIZE" value="' . Censeo_Size_Formatter::to_bytes(ini_get('upload_max_filesize')) . '" />';
-		$output .= '<input ' . $this->get_attr_markup($attributes) . ' />';
+		$output .= '<input ' . censeo_get_attr_markup($attributes) . ' />';
 		$output .= '<p>' . __('Max upload file size:', 'censeo') . ' ' . Censeo_Size_Formatter::to_megabytes(ini_get('upload_max_filesize')) . '</p>';
 		
 		if ($this->get_attachment_id()) {
@@ -276,8 +276,8 @@ Class Censeo_Field_File extends Censeo_Field {
 		$url_field_attributes = array('type'=>'hidden', 'name'=>$this->get_name() . '[url]', 'value'=>$this->get_url());
 		$attachment_id_field_attributes = array('type'=>'hidden', 'name'=>$this->get_name() . '[attachment_id]', 'value'=>$this->get_attachment_id());
 		
-		$output .= '<input ' . $this->get_attr_markup($url_field_attributes) . ' />';
-		$output .= '<input ' . $this->get_attr_markup($attachment_id_field_attributes) . ' />';
+		$output .= '<input ' . censeo_get_attr_markup($url_field_attributes) . ' />';
+		$output .= '<input ' . censeo_get_attr_markup($attachment_id_field_attributes) . ' />';
 		
 		$clear_field_attributes = array(
 			'id' => $attributes['id'] . '-clear',
@@ -285,7 +285,7 @@ Class Censeo_Field_File extends Censeo_Field {
 			'type' => 'checkbox',
 			'value' => 1,
 		);
-		$output .= '<label class="alternative-action"><input ' . $this->get_attr_markup($clear_field_attributes) . ' /> ' . __('Remove file', 'censeo') . '</label>';
+		$output .= '<label class="alternative-action"><input ' . censeo_get_attr_markup($clear_field_attributes) . ' /> ' . __('Remove file', 'censeo') . '</label>';
 		
 		return $output;
 	}
