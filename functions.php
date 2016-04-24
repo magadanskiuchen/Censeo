@@ -58,6 +58,9 @@ function censeo_wp_enqueue_scripts() {
 	
 	# Enqueue scripts
 	wp_enqueue_script('jquery');
+	if ( is_singular() && comments_open() && get_option('thread_comments') ) {
+		wp_enqueue_script( 'comment-reply' );
+	}
 	wp_enqueue_script('censeo-support', get_bloginfo('template_directory') . '/js/support.js', array(), CENSEO_VERSION);
 	wp_enqueue_script('censeo-functions', get_bloginfo('template_directory') . '/js/func.js', array('jquery', 'censeo-support'), CENSEO_VERSION);
 }
@@ -74,6 +77,9 @@ function censeo_admin_enqueue_scripts() {
 	
 	# Enqueue scripts
 	wp_enqueue_script('jquery');
+	if ( is_singular() && comments_open() && get_option('thread_comments') ) {
+		wp_enqueue_script( 'comment-reply' );
+	}
 	wp_enqueue_script('censeo-support', get_bloginfo('template_directory') . '/js/support.js', array(), CENSEO_VERSION);
 	wp_enqueue_script('censeo-fields', get_bloginfo('template_directory') . '/lib/fields.js', array('jquery', 'censeo-support'), CENSEO_VERSION);
 	wp_localize_script('censeo-fields', 'ci18n', censeo_get_fields_localization());
