@@ -302,24 +302,6 @@ class Censeo_Pagination {
 	}
 	
 	/**
-	 * Helper method to convert an associative array into HTML tag attribute-value pairs string
-	 * 
-	 * @since 0.2 beta
-	 * 
-	 * @param  array  $attr An associative array of the attributes to be set.
-	 * @return string       A ready-to-use string of attributes for an HTML tag
-	 */
-	public function get_attr_markup(array $attr) {
-		$markup = '';
-		
-		foreach ($attr as $attr_name => $attr_val) {
-			$markup .= ' ' . $attr_name . '="' . esc_attr($attr_val) . '"';
-		}
-		
-		return $markup;
-	}
-	
-	/**
 	 * Internal function to check whether a certain type of element should be included in the pagination
 	 * 
 	 * @since 0.2 beta
@@ -485,7 +467,7 @@ class Censeo_Pagination {
 				 * @param string $element The type of element itself
 				 */
 				$attributes = apply_filters('censeo_pagination_element_markup_attributes', $this->element_attributes, $element);
-				$markup = sprintf($this->element, $this->element_tag, $this->get_attr_markup($attributes), $link);
+				$markup = sprintf($this->element, $this->element_tag, censeo_get_attr_markup($attributes), $link);
 			}
 		}
 		
@@ -626,7 +608,7 @@ class Censeo_Pagination {
 			 */
 			$attributes = apply_filters('censeo_pagination_output_attributes', $this->wrapper_attributes);
 			
-			$output = sprintf($this->wrapper, $this->wrapper_tag, $this->get_attr_markup($attributes), $pagination_markup);
+			$output = sprintf($this->wrapper, $this->wrapper_tag, censeo_get_attr_markup($attributes), $pagination_markup);
 		}
 		
 		return $output;
@@ -665,7 +647,7 @@ class Censeo_Pagination {
 			 */
 			$attributes = apply_filters('censeo_pagination_output_attributes', $this->wrapper_attributes);
 			
-			$output = sprintf($this->wrapper, $this->wrapper_tag, $this->get_attr_markup($attributes), $pagination_markup);
+			$output = sprintf($this->wrapper, $this->wrapper_tag, censeo_get_attr_markup($attributes), $pagination_markup);
 		}
 		
 		return $output;
