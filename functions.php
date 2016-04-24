@@ -20,6 +20,7 @@ add_action('after_setup_theme', 'censeo_after_setup_theme');
 function censeo_after_setup_theme() {
 	require_once(CENSEO_LIB . 'default-widgets.php');
 	require_once(CENSEO_LIB . 'i18n.php');
+	require_once(CENSEO_LIB . 'censeo_helpers.php');
 	
 	require_once(CENSEO_LIB . 'Censeo_Pagination.php');
 	
